@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+
 <head>
     <meta charset="utf-8" />
     <title>@yield('title')</title>
@@ -19,21 +20,24 @@
     <link href="{{ asset('theme/admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('theme/admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-  
+
     @yield('styles')
 
 </head>
 
 <body>
+    @if (Session::has('error') || Session::has('success'))
+    @include('admin.layouts.notification')
+    @endif
 
     <!-- Begin page -->
     <div id="layout-wrapper">
-     
+
         @include('admin.layouts.header');
-        
+
         @include('admin.layouts.sidebar');
 
-     
+
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>
 
@@ -81,9 +85,10 @@
         </div>
     </div> --}}
 
- 
+
     <script>
-        const PATH_ROOT = '{{ asset('theme/admin') }}' 
+        const PATH_ROOT = '{{ asset('
+        theme / admin ')}}'
     </script>
     <!-- JAVASCRIPT -->
     <script src="{{ asset('theme/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -103,3 +108,8 @@
 </body>
 
 </html>
+
+
+@php
+session()->forget('success');
+@endphp
