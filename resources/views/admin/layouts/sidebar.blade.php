@@ -57,6 +57,24 @@
                            </ul>
                        </div>
                    </li>
+
+                   <li class="nav-item">
+                    <a class="nav-link menu-link" href="#tags" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="tags">
+                        <i class="bx bx-menu"></i>
+                        <span data-key="t-layouts">Tag</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="tags">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.tags.index') }}" class="nav-link">Danh sách</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.tags.create') }}" class="nav-link">Thêm mới</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                </ul>
            </div>
            <!-- Sidebar -->
