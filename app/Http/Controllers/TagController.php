@@ -66,7 +66,7 @@ class TagController extends Controller
             $tag->update($request->all());
             return back()->with('success', 'Cập nhật tag thành công');
         } catch (\Exception $e) {
-            Log::error('Lỗi cập nhật danh mục sản phẩm ' . $e->getMessage());
+            Log::error('Lỗi cập nhật tag ' . $e->getMessage());
             return back()->with('error', 'Lỗi cập nhật tag thành công');
         }
     }
