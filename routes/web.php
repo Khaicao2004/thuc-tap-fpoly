@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,10 @@ Route::get('/', function () {
 });
 Route::get('haha', function(){
     echo 111;
+});
+
+Route::prefix('admin')
+    ->as('admin.')
+    ->group(function () {
+        Route::resource('tags', TagController::class);
 });
