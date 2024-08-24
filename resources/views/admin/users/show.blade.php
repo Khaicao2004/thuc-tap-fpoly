@@ -29,22 +29,16 @@ Chi tiết User
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="name">Full Name:</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ $user->name }}" disabled>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="name">Email:</label>
                             <input type="text" class="form-control" id="email" name="email"
                                 value="{{ $user->email }}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name">Password:</label>
-                            <input type="text" class="form-control" id="password" name="password"
-                                value="{{ $user->password }}" disabled>
                         </div>
 
                         <div class="col-12">

@@ -61,7 +61,15 @@
                 <tr>
                     <td>{{$item->id}}</td>
                     <td>{{$item->name}}</td>
-                    <td><img src="{{\Storage::url($item->cover)}}" alt="" width="50px"></td>
+                    <td>
+                        @php
+                            $url = $item->cover;
+                            if (!Str::contains($url, 'http')) {
+                                $url = Storage::url($url);
+                            }
+                        @endphp
+                        <img src="{{ $url }}" alt="" width="100px">
+                    </td>
                     <td>{!!$item->is_active 
                         ? '<span class="badge bg-primary">YES</span>' 
                         : '<span class="badge bg-danger">NO</span>'!!}</td>

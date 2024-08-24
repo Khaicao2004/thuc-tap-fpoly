@@ -40,7 +40,7 @@ Cập nhật User
                     <h4 class="card-title mb-0 flex-grow-1">Thêm mới</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
-                    <div class="form-group">
+                    <div class="form-group  mb-3">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}">
                         @error('name')
@@ -48,7 +48,7 @@ Cập nhật User
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="email">Email</label>
                         <input type="email" class="form-control " id="email" name="email" value="{{ old('email', $user->email) }}">
                         @error('email')
@@ -56,13 +56,6 @@ Cập nhật User
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control " id="password" name="password" autocomplete="new-password" value="{{$user->password}} " disabled>
-                        @error('password')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
                     <div class="col-12">
                         <label for="password" class="form-label">Type</label>
                         <select name="type" id="type" class="form-select">
