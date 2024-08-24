@@ -20,11 +20,17 @@
     <!-- custom Css-->
     <link href="{{ asset('theme/admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('styles')
 
 </head>
 
 <body>
+
+    @if (Session::has('error') || Session::has('success'))
+        @include('admin.layouts.notification')
+    @endif
 
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -99,6 +105,10 @@
     <script src="{{ asset('theme/admin/assets/js/app.js') }}"></script>
 
     @yield('scripts')
+
+    @php
+        session()->forget('success');
+    @endphp
 
 </body>
 
