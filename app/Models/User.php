@@ -50,4 +50,9 @@ class User extends Authenticatable
 
         return $this->type === self::TYPE_ADMIN;
     }
+
+    public function isMember()
+    {
+        return $this->type === self::TYPE_MEMBER;
+    }
 }

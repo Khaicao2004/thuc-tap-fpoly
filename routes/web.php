@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +18,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('admin.layouts.master');
 });
-Route::get('haha', function(){
+Route::get('haha', function () {
     echo 111;
 });
 
 Route::prefix('admin')
     ->as('admin.')
     ->group(function () {
+        Route::resource('users', UserController::class);
+    });
+
+Route::prefix('admin')
+    ->as('admin.')
+    ->group(function () {
         Route::resource('tags', TagController::class);
 });
+

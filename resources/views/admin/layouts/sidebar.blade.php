@@ -35,8 +35,8 @@
                    <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                    {{-- <li class="nav-item">
                        <a class="nav-link menu-link" href="{{ route('admin.dashboard') }}">
-                           <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
-                       </a>
+                   <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                   </a>
                    </li> <!-- end Dashboard Menu --> --}}
                    <li class="nav-item">
                        <a class="nav-link menu-link" href="#sidebarCatalogues" data-bs-toggle="collapse" role="button"
@@ -55,6 +55,24 @@
                            </ul>
                        </div>
                    </li>
+
+                   <li class="nav-item">
+                       <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarUsers">
+                           <i class="bx bx-menu"></i>
+                           <span data-key="t-layouts">Users</span>
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarUsers">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{route('admin.users.index') }}" class="nav-link">Danh sách</a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{route('admin.users.create') }}" class="nav-link">Thêm mới</a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
                    <li class="nav-item">
                     <a class="nav-link menu-link" href="#tags" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="tags">
@@ -68,7 +86,6 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.tags.create') }}" class="nav-link">Thêm mới</a>
-=======
                    <li class="nav-item">
                     <a href="#sidebarSize" class="nav-link" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarSize" data-key="t-signin">
