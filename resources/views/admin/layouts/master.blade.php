@@ -21,6 +21,10 @@
     <!-- custom Css-->
     <link href="{{ asset('theme/admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
+
     @yield('styles')
 
 </head>
@@ -31,7 +35,7 @@
     @endif
 
     @if (Session::has('error') || Session::has('success'))
-        @include('admin.layouts.notification')
+    @include('admin.layouts.notification')
     @endif
 
     <!-- Begin page -->
@@ -102,6 +106,9 @@
     <script src="{{ asset('theme/admin/assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
     <script src="{{ asset('theme/admin/assets/js/plugins.js') }}"></script>
 
+    <script type='text/javascript' src='theme/admin/assets/libs/choices.js/public/assets/scripts/choices.min.js'></script>
+    <script type='text/javascript' src='theme/admin/assets/libs/flatpickr/flatpickr.min.js'></script>
+
     @yield('script-libs')
 
     <!-- App js -->
@@ -110,7 +117,7 @@
     @yield('scripts')
 
     @php
-        session()->forget('success');
+    session()->forget('success');
     @endphp
 
 </body>
