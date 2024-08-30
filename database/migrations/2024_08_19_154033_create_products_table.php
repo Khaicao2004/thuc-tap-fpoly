@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Catelogue;
+use App\Models\Catalogue;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Catelogue::class)->constrained();
+            $table->foreignIdFor(Catalogue::class)->constrained();
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('sku')->unique();

@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'catelogue_id',
+        'catalogue_id',
         'name',
         'slug',
         'sku',
@@ -34,9 +34,9 @@ class Product extends Model
         'is_new' => 'boolean',
         'is_show_home' => 'boolean',
     ];
-    public function catelogue()
+    public function catalogue()
     {
-        return $this->belongsTo(Catelogue::class);
+        return $this->belongsTo(Catalogue::class);
     }
     public function tags()
     {

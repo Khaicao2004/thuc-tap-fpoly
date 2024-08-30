@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\TagController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,15 +22,4 @@ Route::get('haha', function () {
     echo 111;
 });
 
-Route::prefix('admin')
-    ->as('admin.')
-    ->group(function () {
-        Route::resource('users', UserController::class);
-    });
-
-Route::prefix('admin')
-    ->as('admin.')
-    ->group(function () {
-        Route::resource('tags', TagController::class);
-});
 
