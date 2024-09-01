@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+    data-sidebar-image="none" data-preloader="disable">
 
 <head>
     <meta charset="utf-8" />
@@ -27,7 +28,7 @@
 
 <body>
     @if (Session::has('error') || Session::has('success'))
-    @include('admin.layouts.notification')
+        @include('admin.layouts.notification')
     @endif
 
     @if (Session::has('error') || Session::has('success'))
@@ -92,7 +93,7 @@
 
     <script>
         const PATH_ROOT = '{{ asset('
-        theme / admin ')}}'
+                theme / admin ') }}'
     </script>
     <!-- JAVASCRIPT -->
     <script src="{{ asset('theme/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -116,8 +117,3 @@
 </body>
 
 </html>
-
-
-@php
-session()->forget('success');
-@endphp
