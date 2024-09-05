@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class CatalogueController extends Controller
 {
-    const PATH_VIEW = 'admin.catagories.';
+    const PATH_VIEW = 'admin.categories.';
     const PATH_UPLOAD = 'catagories';
     /**
      * Display a listing of the resource.
