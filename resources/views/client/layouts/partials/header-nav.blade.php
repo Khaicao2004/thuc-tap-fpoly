@@ -12,15 +12,15 @@
                     <li><a href="">Shop</a></li>
                     <li><a href="#">Pages</a>
                         <ul class="dropdown">
-                            <li><a href="">About Us</a></li>
-                            <li><a href="">Shop Details</a></li>
-                            <li><a href="">Shopping Cart</a></li>
-                            <li><a href="">Check Out</a></li>
-                            <li><a href="">Blog Details</a></li>
+                            <li><a href="{{ route('about') }}">About Us</a></li>
+                            <li><a href="{{ route('shopDetails') }}">Shop Details</a></li>
+                            <li><a href="{{ route('shoppingCart') }}">Shopping Cart</a></li>
+                            <li><a href="{{ route('checkout') }}">Check Out</a></li>
+                            <li><a href="{{ route('blogDetails') }}">Blog Details</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Blog</a></li>
-                    <li><a href="">Contacts</a></li>
+                    <li><a href="{{ route('blog') }}">Blog</a></li>
+                    <li><a href="{{ route('contact') }}">Contacts</a></li>
                 </ul>
             </nav>
         </div>
