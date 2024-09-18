@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,3 +47,7 @@ Route::get('shopping-cart', function () {
 Route::get('checkout', function () {
     return view('client.checkout');
 })->name('checkout');
+
+Route::get('cart/list', [CartController::class, 'list'])->name('cart.list');
+Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::delete('/cart/remove/{productVariantId}', [CartController::class, 'remove'])->name('cart.remove');
