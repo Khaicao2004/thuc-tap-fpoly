@@ -13,7 +13,6 @@
                     <li><a href="#">Pages</a>
                         <ul class="dropdown">
                             <li><a href="{{ route('about') }}">About Us</a></li>
-                            <li><a href="{{ route('shopDetails') }}">Shop Details</a></li>
                             <li><a href="{{ route('shoppingCart') }}">Shopping Cart</a></li>
                             <li><a href="{{ route('checkout') }}">Check Out</a></li>
                             <li><a href="{{ route('blogDetails') }}">Blog Details</a></li>

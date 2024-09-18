@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('client.index');
-})->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/shop-details/{slug}', [HomeController::class, 'detail'])->name('shop.detail');
 
 Route::get('contact', function () {
     return view('client.contact');
@@ -38,10 +38,6 @@ Route::get('blog-details', function () {
 Route::get('shop', function () {
     return view('client.shop');
 })->name('shop');
-
-Route::get('shop-details', function () {
-    return view('client.shop-details');
-})->name('shopDetails');
 
 Route::get('shopping-cart', function () {
     return view('client.shopping-cart');
