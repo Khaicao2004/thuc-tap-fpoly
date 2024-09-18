@@ -45,7 +45,7 @@
                                    <a href="{{ route('admin.categories.index') }}" class="nav-link">Danh sách</a>
                                </li>
                                <li class="nav-item">
-                                   <a href="" class="nav-link">Thêm mới</a>
+                                   <a href="{{ route('admin.categories.create') }}" class="nav-link">Thêm mới</a>
                                </li>
                            </ul>
                        </div>
@@ -67,27 +67,56 @@
                            </ul>
                        </div>
                    </li>
+
                    <li class="nav-item">
-                       <a href="#sidebarSize" class="nav-link" data-bs-toggle="collapse" role="button"
-                           aria-expanded="false" aria-controls="sidebarSize" data-key="t-signin">
-                           <i class="bx bx-font-size"></i>
-                           Size
+                       <a class="nav-link menu-link" href="#sidebarVariant" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarVariant">
+                           <i class="ri-bubble-chart-fill"></i> <span data-key="t-authentication">Biến thể</span>
                        </a>
-                       <div class="collapse menu-dropdown" id="sidebarSize">
+                       <div class="collapse menu-dropdown" id="sidebarVariant">
                            <ul class="nav nav-sm flex-column">
                                <li class="nav-item">
-                                   <a href="{{ route('admin.productsizes.index') }}" class="nav-link"
-                                       data-key="t-basic"> Danh sách
+                                   <a href="#sidebarColor" class="nav-link" data-bs-toggle="collapse" role="button"
+                                       aria-expanded="false" aria-controls="sidebarColor" data-key="t-signin">Color
                                    </a>
+                                   <div class="collapse menu-dropdown" id="sidebarColor">
+                                       <ul class="nav nav-sm flex-column">
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.productcolors.index') }}" class="nav-link"
+                                                   data-key="t-basic"> Danh sách
+                                               </a>
+                                           </li>
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.productcolors.create') }}" class="nav-link"
+                                                   data-key="t-cover"> Thêm mới
+                                               </a>
+                                           </li>
+                                       </ul>
+                                   </div>
                                </li>
                                <li class="nav-item">
-                                   <a href="{{ route('admin.productsizes.create') }}" class="nav-link"
-                                       data-key="t-cover"> Thêm mới
+                                   <a href="#sidebarSize" class="nav-link" data-bs-toggle="collapse" role="button"
+                                       aria-expanded="false" aria-controls="sidebarSize" data-key="t-signin">Size
                                    </a>
+                                   <div class="collapse menu-dropdown" id="sidebarSize">
+                                       <ul class="nav nav-sm flex-column">
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.productsizes.index') }}" class="nav-link"
+                                                   data-key="t-basic"> Danh sách
+                                               </a>
+                                           </li>
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.productsizes.create') }}" class="nav-link"
+                                                   data-key="t-cover"> Thêm mới
+                                               </a>
+                                           </li>
+                                       </ul>
+                                   </div>
                                </li>
                            </ul>
                        </div>
                    </li>
+
                    <li class="nav-item">
                        <a href="#sidebarTags" class="nav-link" data-bs-toggle="collapse" role="button"
                            aria-expanded="false" aria-controls="sidebarTags" data-key="t-signin">
@@ -111,23 +140,23 @@
                    </li>
 
                    <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayoutsProducts" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebarLayoutsProducts">
-                        <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Sản phẩm</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayoutsProducts">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.products.index') }}" class="nav-link"
-                                    data-key="t-horizontal">Danh sách</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.products.create') }}" class="nav-link"
-                                    data-key="t-horizontal">Thêm mới</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                       <a class="nav-link menu-link" href="#sidebarLayoutsProducts" data-bs-toggle="collapse"
+                           role="button" aria-expanded="false" aria-controls="sidebarLayoutsProducts">
+                           <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Sản phẩm</span>
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarLayoutsProducts">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                       data-key="t-horizontal">Danh sách</a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.products.create') }}" class="nav-link"
+                                       data-key="t-horizontal">Thêm mới</a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
 
                </ul>
            </div>
