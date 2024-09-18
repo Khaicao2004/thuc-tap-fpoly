@@ -90,7 +90,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6>{{ $hotDeal->name }}</h6>
-                                <a href="{{ route('shop.detail', $new->slug) }}" class="add-cart">+ Xem chi tiết</a>
+                                <a href="{{ route('shop.detail', $hotDeal->slug) }}" class="add-cart">+ Xem chi tiết</a>
                                 <div class="rating">
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6>{{ $goodDeal->name }}</h6>
-                                <a href="{{ route('shop.detail', $new->slug) }}" class="add-cart">+ Xem chi tiết</a>
+                                <a href="{{ route('shop.detail', $goodDeal->slug) }}" class="add-cart">+ Xem chi tiết</a>
                                 <div class="rating">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
