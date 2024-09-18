@@ -62,30 +62,35 @@
                                 <span> {{ number_format($product->price_regular, 0, ',', '.') }}đ</span>
                             </h3>
                             <p>{{ $product->description }}</p>
-                            <div class="product__details__option">
-                                <div class="product__details__option__size">
-                                    <span><b>Size:</b></span>
-                                    @foreach ($sizes as $id => $name)
-                                        <input type="radio" class="mx-2" name="product_size_id"
-                                            value="{{ $id }}">{{ $name }}
-                                    @endforeach
-                                </div>
-                                <div class="product__details__option__size">
-                                    <span><b>Color:</b></span>
-                                    @foreach ($colors as $id => $name)
-                                        <input type="radio" class="mx-2" name="product_color_id"
-                                            value="{{ $id }}">{{ $name }}
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" name="quantity" value="1">
+                            <form action="{{ route('cart.add') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="product__details__option"">
+                                    <div class="product__details__option__size">
+                                        <span><b>Size:</b></span>
+                                        @foreach ($sizes as $id => $name)
+                                            <input type="radio" class="mx-2" name="product_size_id"
+                                                value="{{ $id }}">{{ $name }}
+                                        @endforeach
+                                    </div>
+                                    <div class="product__details__option__size">
+                                        <span><b>Color:</b></span>
+                                        @foreach ($colors as $id => $name)
+                                            <input type="radio" class="mx-2" name="product_color_id"
+                                                value="{{ $id }}">{{ $name }}
+                                        @endforeach
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">add to cart</a>
-                            </div>
+                                <div class="product__details__cart__option">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="number" name="quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="primary-btn mt-3">add to cart</button>
+                                </div>
+                            </form>
+
                             <div class="product__details__last__option">
                                 <ul>
                                     <li><span>SKU:</span> {{ $product->sku }}</li>
@@ -195,14 +200,14 @@
                                     <i class="fa fa-star-o"></i>
                                 </div>
                                 @if ($item->price_sale)
-                                <h5>
-                                    {{ number_format($item->price_sale, 0, ',', '.') }}đ
-                                </h5>
-                            @else
-                                <h5>
-                                    {{ number_format($item->price_regular, 0, ',', '.') }}đ
-                                </h5>
-                            @endif
+                                    <h5>
+                                        {{ number_format($item->price_sale, 0, ',', '.') }}đ
+                                    </h5>
+                                @else
+                                    <h5>
+                                        {{ number_format($item->price_regular, 0, ',', '.') }}đ
+                                    </h5>
+                                @endif
                             </div>
                         </div>
                     </div>

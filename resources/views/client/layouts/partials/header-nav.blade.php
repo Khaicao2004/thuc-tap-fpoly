@@ -23,13 +23,13 @@
                 </ul>
             </nav>
         </div>
+
         <div class="col-lg-3 col-md-3">
             <div class="header__nav__option">
                 <button class="search-switch btn btn-secondery"><img src="/theme/client/img/icon/search.png"
                         alt=""></button>
-                <a href="#"><img src="/theme/client/img/icon/heart.png" alt=""></a>
-                <a href="#"><img src="/theme/client/img/icon/cart.png" alt=""> <span>0</span></a>
-                <div class="price">$0.00</div>
+                <a href="{{ route('cart.list') }}"><img src="/theme/client/img/icon/cart.png" alt="">
+                    <span>{{ count(session('cart', [])) }}</span></a>
             </div>
         </div>
     </div>
