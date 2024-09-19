@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('catalogues', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->index()->nullable();
             $table->string('name');
             $table->string('cover')->nullable();
+            $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

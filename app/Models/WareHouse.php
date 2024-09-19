@@ -6,14 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tag extends Model
+class WareHouse extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'name',
-        'slug'
+        'location'
     ];
-    public function products(){
-        return $this->belongsToMany(Product::class);
-    }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('type', [User::TYPE_ADMIN,User::TYPE_MEMBER])->default(User::TYPE_MEMBER);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
