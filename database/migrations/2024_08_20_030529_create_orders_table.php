@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\ProductVariant;
 use App\Models\User;
@@ -19,6 +20,8 @@ return new class extends Migration
 
             //user_id chỉ dùng để xác định nó là thằng nào trên hệ thống 
             $table->foreignIdFor(User::class)->constrained();
+            // ma giam gia 
+            $table->foreignIdFor(Coupon::class)->constrained();
 
             // Lưu lại toàn bộ thông tin của người đặt hàng 
             $table->string('user_name');

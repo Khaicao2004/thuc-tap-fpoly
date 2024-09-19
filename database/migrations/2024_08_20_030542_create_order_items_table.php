@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('variant_size_name');
             $table->string('variant_color_name');
 
-            
             $table->timestamps();
 
         });

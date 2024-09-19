@@ -19,10 +19,11 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained();
             $table->foreignIdFor(ProductSize::class)->constrained();
             $table->foreignIdFor(ProductColor::class)->constrained();
+            $table->double('price');
             $table->unsignedInteger('quantity')->default(0);
             $table->string('image')->nullable();
+            $table->softDeletes();
             $table->timestamps();
-
             $table->unique(['product_id','product_size_id','product_color_id'],'product_variants_unique');
         });
     }

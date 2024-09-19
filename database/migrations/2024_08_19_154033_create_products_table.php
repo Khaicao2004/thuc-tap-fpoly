@@ -31,6 +31,7 @@ return new class extends Migration
             $table->boolean('is_good_deal')->default(false);
             $table->boolean('is_new')->default(false);
             $table->boolean('is_show_home')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
