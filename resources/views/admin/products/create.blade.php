@@ -174,6 +174,7 @@
                                     <tr>
                                         <th>Size</th>
                                         <th>Color</th>
+                                        <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Image</th>
                                     </tr>
@@ -185,6 +186,10 @@
                                                     <div
                                                         style="width: 50px; height: 50px; background-color: {{ $colorName }}">
                                                     </div>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control"
+                                                        name="product_variants[{{ $sizeID . '-' . $colorID }}][price]">
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control"
@@ -280,7 +285,7 @@
     </form>
 @endsection
 
-@section('script-libs') 
+@section('script-libs')
     <script src="{{ asset('theme/admin/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
 @endsection
 

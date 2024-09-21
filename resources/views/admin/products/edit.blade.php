@@ -83,8 +83,8 @@
 
                                     <div class="mt-3">
                                         <label for="img_thumbnail" class="form-label">Img Thumbnail</label>
-                                        <input type="file" class="form-control" id="img_thumbnail"
-                                            name="img_thumbnail" />
+                                        <input type="file" class="form-control" id="img_thumbnail" name="img_thumbnail" />
+                                        <input type="hidden" name="current_img_thumbnail" value="{{ $product->img_thumbnail }}">
                                         @php
                                             $url = $product->img_thumbnail;
                                             if (!Str::contains($url, 'http')) {
@@ -191,6 +191,7 @@
                                     <tr>
                                         <th>Size</th>
                                         <th>Color</th>
+                                        <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Image</th>
                                         <th></th>
@@ -209,14 +210,21 @@
                                                     @if ($variant['product_size_id'] == $sizeID && $variant['product_color_id'] == $colorID)
                                                         <td>
                                                             <input type="number" class="form-control"
+                                                                name="product_variants[{{ $sizeID . '-' . $colorID }}][price]"
+                                                                value="{{ $variant['price'] }}">
+                                                        </td>
+                                                    @endif
+                                                    @if ($variant['product_size_id'] == $sizeID && $variant['product_color_id'] == $colorID)
+                                                        <td>
+                                                            <input type="number" class="form-control"
                                                                 name="product_variants[{{ $sizeID . '-' . $colorID }}][quantity]"
                                                                 value="{{ $variant['quantity'] }}">
                                                         </td>
                                                     @endif
                                                     @if ($variant['product_size_id'] == $sizeID && $variant['product_color_id'] == $colorID)
                                                         <td>
-                                                            <input type="file" class="form-control"
-                                                                name="product_variants[{{ $sizeID . '-' . $colorID }}][image]">
+                                                            <input type="file" class="form-control" name="product_variants[{{ $sizeID . '-' . $colorID }}][image]">
+                                                            <input type="hidden" name="product_variants[{{ $sizeID . '-' . $colorID }}][current_image]" value="{{ $variant['image'] }}">
                                                         </td>
                                                         <td>
                                                             @php
@@ -225,8 +233,7 @@
                                                                     $url = Storage::url($url);
                                                                 }
                                                             @endphp
-                                                            <img src="{{ $url }}" alt=""
-                                                                width="100px">
+                                                            <img src="{{ $url }}" alt="" width="100px">
                                                         </td>
                                                     @endif
                                                 @endforeach
@@ -335,7 +342,7 @@
     </form>
 @endsection
 
-@section('script-libs') 
+@section('script-libs')
     <script src="{{ asset('theme/admin/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
 @endsection
 

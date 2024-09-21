@@ -173,6 +173,7 @@
                                 <tr>
                                     <th>Size</th>
                                     <th>Color</th>
+                                    <th style="width:300px">Price</th>
                                     <th style="width:300px">Quantity</th>
                                     <th>Image</th>
                                 </tr>
@@ -189,6 +190,13 @@
                                                 </div>
                                             </td>
                                             @foreach ($variants as $variant)
+                                                @if ($variant['product_size_id'] == $sizeID && $variant['product_color_id'] == $colorID)
+                                                    <td>
+                                                        <input type="number" class="form-control"
+                                                            name="product_variants[{{ $sizeID . '-' . $colorID }}][price]"
+                                                            value="{{ $variant['price'] }}" disabled>
+                                                    </td>
+                                                @endif
                                                 @if ($variant['product_size_id'] == $sizeID && $variant['product_color_id'] == $colorID)
                                                     <td>
                                                         <input type="number" class="form-control"
@@ -320,7 +328,7 @@
     </div>
 @endsection
 
-@section('script-libs') 
+@section('script-libs')
     <script src="{{ asset('theme/admin/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
 @endsection
 

@@ -249,13 +249,15 @@ class ProductController extends Controller
         $dataProduct['is_show_home'] = isset($dataProduct['is_show_home']) ? 1 : 0;
         $dataProduct['slug'] = Str::slug($dataProduct['name']) . '-' . $dataProduct['sku'];
 
+        // Kiểm tra và lưu hình ảnh thumbnail
         if ($request->hasFile('img_thumbnail')) {
             $image = $request->file('img_thumbnail');
             $dataProduct['img_thumbnail'] = $image->store('products', 'public');
         } else {
-            $dataProduct['img_thumbnail'] = null;
+            $dataProduct['img_thumbnail'] = $request->input('current_img_thumbnail'); // Giữ nguyên ảnh hiện tại
         }
 
+        // Xử lý biến thể
         $dataProductVariantsTmp = $request->product_variants;
         $dataProductVariants = [];
         foreach ($dataProductVariantsTmp as $key => $item) {
@@ -264,29 +266,27 @@ class ProductController extends Controller
             if (!empty($item['image'])) {
                 $image = $item['image']->store('product_variants', 'public');
             } else {
-                $image = $item['current_image'] ?? null;
+                $image = $item['current_image'] ?? null; // Giữ nguyên ảnh hiện tại nếu không tải lên ảnh mới
             }
-                
 
             $dataProductVariants[] = [
                 'product_size_id' => $tmp[0],
                 'product_color_id' => $tmp[1],
+                'price' => $item['price'],
                 'quantity' => $item['quantity'],
                 'image' => $image
             ];
         }
 
+        // Xử lý hình ảnh thư viện
         $dataProductGalleriesTmp = $request->product_galleries ?: [];
         $dataProductGalleries = [];
         foreach ($dataProductGalleriesTmp as $image) {
-
             if (!empty($image)) {
                 $dataProductGalleries[] = [
-                    'id' => $item['id'] ?? null,
                     'image' => $image->store('product_galleries', 'public')
                 ];
             }
-            
         }
 
         $dataProductTags = $request->tags;
@@ -294,4 +294,5 @@ class ProductController extends Controller
 
         return [$dataProduct, $dataProductVariants, $dataProductGalleries, $dataProductTags, $dataDeleteGalleries];
     }
+
 }
