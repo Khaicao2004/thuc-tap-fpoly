@@ -29,6 +29,8 @@ class UpdateTagRequest extends FormRequest
                 'max:255',
                 Rule::unique('tags')->ignore($this->tag->id)
                 ],
+            'slug' => 'nullable|string|max:255|unique:tags,slug',
+            'slug.max' => 'Slug không được vượt quá 255 ký tự.',
         ];
     }
     public function messages()

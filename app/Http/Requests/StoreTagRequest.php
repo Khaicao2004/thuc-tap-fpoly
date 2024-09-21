@@ -23,6 +23,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:tags,name',
+            'slug' => 'nullable|string|max:255|unique:tags,slug',
         ];
     }
     public function messages()
@@ -31,6 +32,8 @@ class StoreTagRequest extends FormRequest
             'name.required' => 'Tên tag là bắt buộc.',
             'name.unique' => 'Tên tag đã tồn tại.',
             'name.max' => 'Tên tag không được vượt quá 255 ký tự.',
+            'slug.unique' => 'Slug đã tồn tại.',
+            'slug.max' => 'Slug không được vượt quá 255 ký tự.',
         ];
     }
 }

@@ -35,6 +35,16 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-lg-12">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug" id="slug"
+                                        class="form-control @error('slug') is-invalid @enderror" placeholder="Nhập slug"
+                                        value="{{ $tag->slug }}">
+                                    @error('slug')
+                                        <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary">Sửa</button>
                                 </div>

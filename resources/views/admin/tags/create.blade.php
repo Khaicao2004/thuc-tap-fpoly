@@ -6,7 +6,6 @@
 
 @section('content')
 
-
     @if ($errors->any())
         <div class="alert alert-danger">Đã có lỗi nhập liệu. Vui lòng kiểm tra lại!</div>
     @endif
@@ -29,8 +28,17 @@
                                 <div class="col-lg-12">
                                     <label for="name">Tên tag</label>
                                     <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
-                                        placeholder="Nhập tên tag">
+                                        placeholder="Nhập tên tag" required>
                                     @error('name')
+                                        <span class="d-block text-danger mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror"
+                                        placeholder="Nhập slug">
+                                    @error('slug')
                                         <span class="d-block text-danger mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>

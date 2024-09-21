@@ -31,17 +31,19 @@
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="live-preview">
-                        <div class="live-preview">
-                            <div class="row gy-4">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Tên tag</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $tag->name) }}" disabled>
-                                </div>
-                                <a href="{{ route('admin.tags.index') }}" class="btn btn-primary mt-3">Quay lại danh sách</a>
+                        <div class="row gy-4">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên tag</label>
+                                <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $tag->name) }}" disabled>
                             </div>
+                            <div class="mb-3">
+                                <label for="slug" class="form-label">Slug</label>
+                                <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $tag->slug) }}" disabled>
+                            </div>
+                            <a href="{{ route('admin.tags.index') }}" class="btn btn-primary mt-3">Quay lại danh sách</a>
                         </div>
-                        <!--end row-->
                     </div>
+                    <!--end row-->
                 </div>
             </div>
         </div>
