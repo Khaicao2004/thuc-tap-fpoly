@@ -35,10 +35,6 @@
         @include('admin.layouts.notification')
     @endif
 
-    @if (Session::has('error') || Session::has('success'))
-    @include('admin.layouts.notification')
-    @endif
-
     <!-- Begin page -->
     <div id="layout-wrapper">
 
@@ -118,7 +114,8 @@
     @yield('scripts')
 
     @php
-    session()->forget('success');
+        session()->forget('success');
+        session()->forget('error');
     @endphp
 
 </body>
