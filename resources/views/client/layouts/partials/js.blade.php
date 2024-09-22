@@ -9,3 +9,5 @@
  <script src="/theme/client/js/mixitup.min.js"></script>
  <script src="/theme/client/js/owl.carousel.min.js"></script>
  <script src="/theme/client/js/main.js"></script>
+ @yield('script-libs')
+ @yield('scripts')

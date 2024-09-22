@@ -217,3 +217,19 @@
         </div>
     </section>
 @endsection
+
+@section('script-libs')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endsection
+
+@section('scripts')
+    <script>
+        @if (session('alert-message'))
+            Swal.fire({
+                icon: "{{ session('alert-type') }}",
+                title: '{{ ucfirst(session('alert-type')) }}',
+                text: "{{ session('alert-message') }}",
+            });
+        @endif
+    </script>
+@endsection

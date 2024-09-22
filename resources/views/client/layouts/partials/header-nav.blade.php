@@ -30,6 +30,7 @@
                         alt=""></button>
                 <a href="{{ route('cart.list') }}"><img src="/theme/client/img/icon/cart.png" alt="">
                     <span>{{ count(session('cart', [])) }}</span></a>
+                    <div class="price">{{ number_format($totalAmount, 0, ',', '.') }} VNĐ</div>
             </div>
         </div>
     </div>

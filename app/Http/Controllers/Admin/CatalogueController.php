@@ -29,7 +29,6 @@ class CatalogueController extends Controller
     public function create()
     {
         return view(self::PATH_VIEW . __FUNCTION__);
-
     }
 
     /**
@@ -39,10 +38,10 @@ class CatalogueController extends Controller
     {
         $data = $storeCatelogueRequest->except('cover');
         $data['is_active'] ??= 0;
-        if($storeCatelogueRequest->hasFile('cover')){
+        if ($storeCatelogueRequest->hasFile('cover')) {
             $data['cover'] = Storage::put(self::PATH_UPLOAD, $storeCatelogueRequest->file('cover'));
         }
-      
+
         Catalogue::query()->create($data);
 
         return redirect()->route('admin.categories.index');
@@ -63,7 +62,7 @@ class CatalogueController extends Controller
      */
     public function edit(string $id)
     {
-        $model = Catalogue::query()->findOrFail($id); 
+        $model = Catalogue::query()->findOrFail($id);
         return view(self::PATH_VIEW . __FUNCTION__, compact('model'));
     }
     /**
@@ -76,15 +75,15 @@ class CatalogueController extends Controller
         $data = $UpdateCatelogueRequest->except('cover');
         $data['is_active'] ??= 0;
         $data = $UpdateCatelogueRequest->validated();
-       
-        if($UpdateCatelogueRequest->hasFile('cover')){
+
+        if ($UpdateCatelogueRequest->hasFile('cover')) {
             $data['cover'] = Storage::put(self::PATH_UPLOAD, $UpdateCatelogueRequest->file('cover'));
         }
         $currentCover = $model->cover;
 
         $model->update($data);
 
-        if($UpdateCatelogueRequest->hasFile('cover') && $currentCover && Storage::exists($currentCover)){
+        if ($UpdateCatelogueRequest->hasFile('cover') && $currentCover && Storage::exists($currentCover)) {
             Storage::delete($currentCover);
         }
 
@@ -97,10 +96,10 @@ class CatalogueController extends Controller
     public function destroy(string $id)
     {
         $model = Catalogue::query()->findOrFail($id);
-            
+
         $model->delete();
 
-        if($model->cover && Storage::exists($model->cover)){
+        if ($model->cover && Storage::exists($model->cover)) {
             Storage::delete($model->cover);
         }
 

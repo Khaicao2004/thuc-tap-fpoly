@@ -7,6 +7,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
     <!-- Google Font -->
@@ -59,12 +60,12 @@
         @include('client.layouts.partials.header-nav')
 
     </header>
-   
+
     @yield('content')
 
     <!-- Footer Section Begin -->
     <footer class="footer">
-    @include('client.layouts.partials.footer')
+        @include('client.layouts.partials.footer')
 
     </footer>
     <!-- Footer Section End -->
@@ -81,7 +82,7 @@
     <!-- Search End -->
 
     @include('client.layouts.partials.js')
-    
+
 </body>
 
 </html>
