@@ -27,6 +27,8 @@ return new class extends Migration
             $table->double('product_price_sale')->nullable();
 
             //sao lưu thông tin biến thể
+            $table->string('variant_image');
+            $table->string('variant_price');
             $table->string('variant_size_name');
             $table->string('variant_color_name');
 
