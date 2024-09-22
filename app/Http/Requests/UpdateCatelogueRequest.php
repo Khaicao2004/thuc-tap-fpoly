@@ -23,7 +23,7 @@ class UpdateCatelogueRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -34,7 +34,7 @@ class UpdateCatelogueRequest extends FormRequest
             'name.string' => 'Tên phải là một chuỗi ký tự.',
             'name.max' => 'Tên không được vượt quá 255 ký tự.',
 
-            'cover.required' => 'Vui lòng chọn một ảnh để tải lên.',
+           
             'cover.image' => 'Tệp tải lên phải là một ảnh.',
             'cover.mimes' => 'Ảnh phải có định dạng jpeg, png, jpg, gif, hoặc svg.',
             'cover.max' => 'Ảnh không được vượt quá 2 MB.',

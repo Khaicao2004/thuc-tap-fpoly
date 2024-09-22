@@ -13,4 +13,9 @@ class WareHouse extends Model
         'name',
         'location'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

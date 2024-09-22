@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh sách danh mục sản phẩm
+    Danh sách mã giảm giá
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item">
                         <a href="javascript: void(0);"
-                            >Danh mục</a
+                            >Mã giảm giá</a
                         >
                     </li>
                     <li class="breadcrumb-item active">
@@ -36,7 +36,7 @@
                 <h5 class="card-title mb-0">
                     Danh sách
                 </h5>
-                <a href="{{route('admin.categories.create')}}" class="btn btn-primary mb-3">Thêm mới</a>
+                <a href="{{route('admin.coupons.create')}}" class="btn btn-primary mb-3">Thêm mới</a>
             </div>
             <div class="card-body">
                 <table
@@ -47,9 +47,14 @@
                <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Cover</th>
+                    <th>Tên mã</th>
+                    <th>Giá trị (Số tiền, hoặc %)</th>
+                    <th>Số tiền tối thiểu</th>
+                    <th>Số lượng mã</th>
+                    <th>Số lần được sử dụng</th>
                     <th>Is_active</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
                     <th>Created at</th>
                     <th>Updated at</th>
                     <th>Action</th>
@@ -61,25 +66,22 @@
                 <tr>
                     <td>{{$item->id}}</td>
                     <td>{{$item->name}}</td>
-                    <td>
-                        @php
-                            $url = $item->cover;
-                            if (!Str::contains($url, 'http')) {
-                                $url = Storage::url($url);
-                            }
-                        @endphp
-                        <img src="{{ $url }}" alt="" width="100px">
-                    </td>
+                    <td>{{$item->discount_value}}</td>
+                    <td>{{$item->min_order_value}}</td>
+                    <td>{{$item->usage_limit}}</td>
+                    <td>{{$item->used}}</td>
                     <td>{!!$item->is_active 
-                        ? '<span class="badge bg-primary">YES</span>' 
-                        : '<span class="badge bg-danger">NO</span>'!!}</td>
+                        ? '<span class="badge bg-primary">Còn hoạt động</span>' 
+                        : '<span class="badge bg-danger">Không hoạt động</span>'!!}</td>
+                    <td>{{$item->start_date}}</td>
+                    <td>{{$item->end_date}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td>
                         <div class="d-flex gap-2">
-                            <a href="{{route('admin.categories.show', $item->id)}}" class="btn btn-primary mb-3">Xem</a>
-                            <a href="{{route('admin.categories.edit', $item->id)}}" class="btn btn-warning mb-3">Sửa</a>
-                            <form action="{{route('admin.categories.destroy',$item)}}" method="POST">
+                            <a href="{{route('admin.coupons.show', $item->id)}}" class="btn btn-primary mb-3">Xem</a>
+                            <a href="{{route('admin.coupons.edit', $item->id)}}" class="btn btn-warning mb-3">Sửa</a>
+                            <form action="{{route('admin.coupons.destroy',$item)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Xóa</button>

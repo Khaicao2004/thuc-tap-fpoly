@@ -7,12 +7,14 @@ use App\Http\Requests\StoreCatelogueRequest;
 use App\Http\Requests\UpdateCatelogueRequest;
 use App\Models\Catalogue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CatalogueController extends Controller
 {
-    const PATH_VIEW = 'admin.categories.';
-    const PATH_UPLOAD = 'catagories';
+    const PATH_VIEW = 'admin.catalogues.';
+    const PATH_UPLOAD = 'catalogues';
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +30,9 @@ class CatalogueController extends Controller
      */
     public function create()
     {
-        return view(self::PATH_VIEW . __FUNCTION__);
+        $parentCategories = Catalogue::query()->with(['children'])->whereNull('parent_id')->get();
+        // dd($parentCategories);
+        return view(self::PATH_VIEW . __FUNCTION__, compact('parentCategories'));
     }
 
     /**
@@ -36,58 +40,76 @@ class CatalogueController extends Controller
      */
     public function store(StoreCatelogueRequest $storeCatelogueRequest)
     {
-        $data = $storeCatelogueRequest->except('cover');
-        $data['is_active'] ??= 0;
-        if ($storeCatelogueRequest->hasFile('cover')) {
-            $data['cover'] = Storage::put(self::PATH_UPLOAD, $storeCatelogueRequest->file('cover'));
+        try {
+            $data = $storeCatelogueRequest->except('cover');
+
+            $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+            // dd($data);
+
+            $data['slug'] = Str::slug($storeCatelogueRequest->name);
+            // $data = $storeCatelogueRequest->all();
+            if($storeCatelogueRequest->hasFile('cover')){
+                $data['cover'] = Storage::put(self::PATH_UPLOAD, $storeCatelogueRequest->file('cover'));
+            }
+            // dd($data);
+            Catalogue::query()->create($data);
+            return redirect()
+            ->route('admin.catalogues.index')
+            ->with('success','Thêm thành công');
+        } catch (\Exception $exception) {
+            Log::error('Lỗi thêm danh mục ' . $exception->getMessage());
+            // dd($exception->getMessage());
+            return back()->with('error', 'Lỗi thêm danh mục');
         }
-
-        Catalogue::query()->create($data);
-
-        return redirect()->route('admin.categories.index');
     }
+
+    
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Catalogue $catalogue)
     {
-        $model = Catalogue::query()->findOrFail($id);
+       
 
-        return view(self::PATH_VIEW . __FUNCTION__, compact('model'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('catalogue'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Catalogue $catalogue)
     {
-        $model = Catalogue::query()->findOrFail($id);
-        return view(self::PATH_VIEW . __FUNCTION__, compact('model'));
+        $parentCatalogue = Catalogue::query()->with(['children'])->whereNull('parent_id')->get();
+        // dd($parentCatalogue);    
+        return view(self::PATH_VIEW . __FUNCTION__, compact('catalogue','parentCatalogue'));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCatelogueRequest $UpdateCatelogueRequest, string $id)
+    public function update(UpdateCatelogueRequest $request, Catalogue $catalogue)
     {
-        $model = Catalogue::query()->findOrFail($id);
+        try {
+            $data = $request->except('cover');
+            $data['is_active'] ??= 0;
+            $data['slug'] = Str::slug($request->name);
+            
+            if($request->hasFile('cover')){
+                $data['cover'] = Storage::put(self::PATH_UPLOAD, $request->file('cover'));
+            }
+            $oldImg=$catalogue->cover;
+            $catalogue->update($data);
+            if ($request->hasFile('cover') && $oldImg && Storage::exists($oldImg)) {
+                Storage::delete($oldImg);
+            }
 
-        $data = $UpdateCatelogueRequest->except('cover');
-        $data['is_active'] ??= 0;
-        $data = $UpdateCatelogueRequest->validated();
-
-        if ($UpdateCatelogueRequest->hasFile('cover')) {
-            $data['cover'] = Storage::put(self::PATH_UPLOAD, $UpdateCatelogueRequest->file('cover'));
+            return redirect()
+                ->route('admin.catalogues.index')
+                ->with('success', 'Cập nhật thành công');
+        } catch (\Exception $exception) {
+            Log::error('Lỗi cập nhật danh mục: ' . $exception->getMessage());
+            return back()->with('error', 'Lỗi cập nhật danh mục');
         }
-        $currentCover = $model->cover;
-
-        $model->update($data);
-
-        if ($UpdateCatelogueRequest->hasFile('cover') && $currentCover && Storage::exists($currentCover)) {
-            Storage::delete($currentCover);
-        }
-
-        return back();
     }
 
     /**
