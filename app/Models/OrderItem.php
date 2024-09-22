@@ -17,6 +17,8 @@ class OrderItem extends Model
         'product_img_thumbnail',
         'product_price_regular',
         'product_price_sale',
+        'variant_image',
+        'variant_price',
         'variant_size_name',
         'variant_color_name',
     ];
