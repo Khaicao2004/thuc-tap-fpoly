@@ -31,6 +31,7 @@ class CatalogueController extends Controller
     public function create()
     {
         $parentCategories = Catalogue::query()->with(['children'])->whereNull('parent_id')->get();
+        // dd($parentCategories);
         return view(self::PATH_VIEW . __FUNCTION__, compact('parentCategories'));
 
     }
@@ -44,8 +45,12 @@ class CatalogueController extends Controller
 
         try {
             $data = $storeCatelogueRequest->except('cover');
-            $data['is_active'] ??= 0;
+
+            $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+            // dd($data);
+
             $data['slug'] = Str::slug($storeCatelogueRequest->name);
+            // $data = $storeCatelogueRequest->all();
             if($storeCatelogueRequest->hasFile('cover')){
                 $data['cover'] = Storage::put(self::PATH_UPLOAD, $storeCatelogueRequest->file('cover'));
             }
@@ -56,6 +61,7 @@ class CatalogueController extends Controller
             ->with('success','Thêm thành công');
         } catch (\Exception $exception) {
             Log::error('Lỗi thêm danh mục ' . $exception->getMessage());
+            // dd($exception->getMessage());
             return back()->with('error', 'Lỗi thêm danh mục');
         }
     }
