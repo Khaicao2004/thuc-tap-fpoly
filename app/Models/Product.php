@@ -11,6 +11,7 @@ class Product extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'catalogue_id',
+        'ware_house_id',
         'name',
         'slug',
         'sku',
@@ -50,5 +51,10 @@ class Product extends Model
     public function variants()
     {
         return $this->hasMany(ProductVariant::class);
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(WareHouse::class);
     }
 }
