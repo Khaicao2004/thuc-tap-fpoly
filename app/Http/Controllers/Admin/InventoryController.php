@@ -15,8 +15,8 @@ class InventoryController extends Controller
     public function index()
     {
         $data = Inventory::query()
-        ->with(['wareHouse','variants'])->latest()->get();
-     //    dd($data->toArray());
+        ->with(['wareHouse','productVariant.product'])->latest()->get();
+        // dd($data->toArray());
         return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
     }
 

@@ -17,11 +17,7 @@ class Inventory extends Model
     {
         return $this->belongsTo(WareHouse::class);
     }
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-    public function variant()
+    public function productVariant()
     {
         return $this->belongsTo(ProductVariant::class);
     }
