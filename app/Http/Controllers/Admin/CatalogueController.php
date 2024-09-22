@@ -33,7 +33,6 @@ class CatalogueController extends Controller
         $parentCategories = Catalogue::query()->with(['children'])->whereNull('parent_id')->get();
         // dd($parentCategories);
         return view(self::PATH_VIEW . __FUNCTION__, compact('parentCategories'));
-
     }
 
     /**
@@ -41,8 +40,6 @@ class CatalogueController extends Controller
      */
     public function store(StoreCatelogueRequest $storeCatelogueRequest)
     {
-
-
         try {
             $data = $storeCatelogueRequest->except('cover');
 
@@ -121,10 +118,10 @@ class CatalogueController extends Controller
     public function destroy(string $id)
     {
         $model = Catalogue::query()->findOrFail($id);
-            
+
         $model->delete();
 
-        if($model->cover && Storage::exists($model->cover)){
+        if ($model->cover && Storage::exists($model->cover)) {
             Storage::delete($model->cover);
         }
 

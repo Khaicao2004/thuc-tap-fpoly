@@ -52,4 +52,6 @@ Route::get('check-out', [OrderController::class , 'showCheckout'])->name('checko
 Route::post('order/save', [OrderController::class, 'save'])->name('order.save');
 Route::get('cart/list', [CartController::class, 'list'])->name('cart.list');
 Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::delete('/cart/remove/{productVariantId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/cart/remove/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/update/{variantId}', [CartController::class, 'update'])->name('cart.update');
+
