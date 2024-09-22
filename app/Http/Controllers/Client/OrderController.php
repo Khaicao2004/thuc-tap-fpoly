@@ -9,20 +9,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
-    public function showCheckout(){
-        if((session('cart'))){
+    public function showCheckout()
+    {
+        if ((session('cart'))) {
             $cart = session('cart');
-        }else{
+        } else {
             $cart = [];
         }
         $totalAmount = 0;
-       foreach ($cart as  $item) {
+        foreach ($cart as  $item) {
             $totalAmount += $item['quantity'] * $item['price'];
-       }
+        }
         return view('client.checkout', compact('totalAmount'));
     }
     public function save()
@@ -32,7 +34,6 @@ class OrderController extends Controller
             DB::transaction(function () {
                 if (Auth::check()) {
                     $user = Auth::user();
-                    
                 } else {
                     $user = User::query()->create([
                         'name' => request('user_name'),
@@ -46,7 +47,7 @@ class OrderController extends Controller
                 }
                 $totalAmount = 0;
                 $dataItem = [];
-                
+
                 foreach (session('cart') as $variantID => $item) {
                     $totalAmount += $item['quantity'] * $item['price'];
                     // dd($item);
@@ -62,7 +63,7 @@ class OrderController extends Controller
                         'variant_price' => $item['price'],
                         'variant_size_name' => $item['size']['name'],
                         'variant_color_name' => $item['color']['name'],
-                        
+
                     ];
                     // dd($dataItem,$item);
                 }
@@ -81,8 +82,17 @@ class OrderController extends Controller
                     $item['order_id'] = $order->id;
 
                     OrderItem::query()->create($item);
+                    $inventory = Inventory::where('product_variant_id', $item['product_variant_id'])
+                        ->first();
+                    // dd( $inventory);
+                    if ($inventory) {
+                        $newQuantity = $inventory->quantity - $item['quantity'];
+                        $inventory->update([
+                            'quantity' => $newQuantity
+                        ]);
+                        
+                    }
                 }
-
             });
 
             session()->forget('cart');
