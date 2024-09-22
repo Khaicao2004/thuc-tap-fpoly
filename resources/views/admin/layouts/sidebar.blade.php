@@ -42,10 +42,10 @@
                        <div class="collapse menu-dropdown" id="sidebarCatalogues">
                            <ul class="nav nav-sm flex-column">
                                <li class="nav-item">
-                                   <a href="{{ route('admin.categories.index') }}" class="nav-link">Danh sách</a>
+                                   <a href="{{ route('admin.catalogues.index') }}" class="nav-link">Danh sách</a>
                                </li>
                                <li class="nav-item">
-                                   <a href="{{ route('admin.categories.create') }}" class="nav-link">Thêm mới</a>
+                                   <a href="{{ route('admin.catalogues.create') }}" class="nav-link">Thêm mới</a>
                                </li>
                            </ul>
                        </div>
