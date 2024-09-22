@@ -12,6 +12,7 @@ class Catalogue extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'slug',
         'cover',
         'is_active',
     ];

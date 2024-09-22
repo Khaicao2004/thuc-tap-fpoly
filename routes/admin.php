@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')
 ->as('admin.')
 ->group(function () {
-    Route::resource('categories', CatalogueController::class);
+    Route::resource('catalogues', CatalogueController::class);
     Route::resource('productcolors',ProductColorController::class);
     Route::resource('productsizes',ProductSizeController::class);
     Route::resource('users', UserController::class);
