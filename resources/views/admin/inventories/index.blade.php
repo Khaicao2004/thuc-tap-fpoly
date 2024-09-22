@@ -1,4 +1,4 @@
-{{-- @extends('admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title')
     Quản lý kho hàng
@@ -54,11 +54,11 @@
                                 <tr class="text-center">
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->wareHouse->name }}</td>
-                                    <td>{{ $item->variants->product->name }}</td>
+                                    <td>{{ $item->productVariant->product->name }}</td>
                                     <td>
                                         <ul>
-                                            <li>{{$item->variants->color}}</li>
-                                            <li>{{$item->variants->product->name}}</li>
+                                            <li>Màu sắc: {{$item->productVariant->color->name}}</li>
+                                            <li>Kích cỡ: {{$item->productVariant->size->name}}</li>
                                         </ul>
                                     </td>
                                     <td>
@@ -117,4 +117,4 @@
             ]
         });
     </script>
-@endsection --}}
+@endsection
