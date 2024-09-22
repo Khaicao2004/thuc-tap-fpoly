@@ -42,7 +42,7 @@ class OrderController extends Controller
                         'password' => bcrypt(request('user_email')),
                         'is_active' => false,
                     ]);
-                    dd($user);
+                    // dd($user);
                 }
                 $totalAmount = 0;
                 $dataItem = [];
@@ -64,10 +64,12 @@ class OrderController extends Controller
                         'variant_color_name' => $item['color']['name'],
                         
                     ];
+                    // dd($dataItem,$item);
                 }
                 $order = Order::query()->create([
                     'user_id' => $user->id,
                     'user_name' => $user->name,
+                    'coupon_id' => 1,
                     'user_email' => $user->email,
                     'user_phone' => $user->phone,
                     'user_address' => $user->address,
