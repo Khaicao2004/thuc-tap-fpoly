@@ -45,7 +45,20 @@
                             <div class="row gy-4">
 
                                 <div class="col-md-4">
+
                                     <div>
+                                        <label for="ware_house_id" class="form-label">Kho hàng</label>
+                                        <select id="" class="form-select" name="ware_house_id" id="ware_house_id">
+                                            @foreach ($wareHouse as $id => $name)
+                                                <option value="{{ $id }}"
+                                                    @if ($product->ware_house_id == $id) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="mt-3">
                                         <label for="name" class="form-label">Name</label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="{{ $product->name }}" />

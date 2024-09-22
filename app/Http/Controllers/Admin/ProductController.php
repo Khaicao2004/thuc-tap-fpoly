@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Catalogue;
+use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductGallery;
 use App\Models\ProductSize;
 use App\Models\ProductVariant;
 use App\Models\Tag;
+use App\Models\WareHouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -34,11 +36,12 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $wareHouse = WareHouse::query()->pluck('name', 'id')->all();
         $catalogues = Catalogue::query()->pluck('name', 'id')->all();
         $colors = ProductColor::query()->pluck('name', 'id')->all();
         $sizes = ProductSize::query()->pluck('name', 'id')->all();
         $tags = Tag::query()->pluck('name', 'id')->all();
-        return view(self::PATH_VIEW . __FUNCTION__, compact('catalogues', 'colors', 'sizes', 'tags'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('catalogues', 'colors', 'sizes', 'tags', 'wareHouse'));
     }
 
     /**
@@ -46,7 +49,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        // dd($request->all());
         list(
             $dataProduct,
             $dataProductVariants,
@@ -54,6 +56,7 @@ class ProductController extends Controller
             $dataProductTags
             ) = $this->handleData($request);
 
+            // dd($dataProduct);
         try {
             DB::beginTransaction();
 
@@ -62,7 +65,13 @@ class ProductController extends Controller
             foreach ($dataProductVariants as $item) {
                 $item += ['product_id' => $product->id];
 
-                ProductVariant::query()->create($item);
+                $productVariant = ProductVariant::query()->create($item);
+
+                Inventory::create([
+                    'ware_house_id' => $request->ware_house_id,
+                    'product_variant_id' => $productVariant->id,
+                    'quantity' => $item['quantity']
+                ]);
             }
 
             $product->tags()->attach($dataProductTags);
@@ -101,6 +110,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $wareHouse = WareHouse::query()->pluck('name', 'id')->all();
         $catalogues = Catalogue::query()->pluck('name', 'id')->all();
         $colors = ProductColor::query()->pluck('name', 'id')->all();
         $sizes = ProductSize::query()->pluck('name', 'id')->all();
@@ -108,7 +118,7 @@ class ProductController extends Controller
         $variants = Product::with('variants')->find($product->id)->variants;
         $galleries = Product::with('galleries')->find($product->id)->galleries;
         $productTags = Product::with('tags')->find($product->id)->tags;
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags', 'wareHouse'));
     }
 
     /**
@@ -116,6 +126,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $wareHouse = WareHouse::query()->pluck('name', 'id')->all();
         $catalogues = Catalogue::query()->pluck('name', 'id')->all();
         $colors = ProductColor::query()->pluck('name', 'id')->all();
         $sizes = ProductSize::query()->pluck('name', 'id')->all();
@@ -123,7 +134,7 @@ class ProductController extends Controller
         $variants = Product::with('variants')->find($product->id)->variants;
         $galleries = Product::with('galleries')->find($product->id)->galleries;
         $productTags = Product::with('tags')->find($product->id)->tags;
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags', 'wareHouse'));
     }
 
     /**
@@ -149,7 +160,7 @@ class ProductController extends Controller
             foreach ($dataProductVariants as $item) {
                 $item += ['product_id' => $product->id];
 
-                ProductVariant::query()->updateOrCreate(
+                $productVariant = ProductVariant::query()->updateOrCreate(
                     [
                         'product_id' => $item['product_id'],
                         'product_size_id' => $item['product_size_id'],
@@ -157,6 +168,27 @@ class ProductController extends Controller
                     ],
                     $item
                 );
+
+                // Kiểm tra xem bản ghi trong Inventory đã tồn tại chưa
+                $inventory = Inventory::query()->where([
+                    'product_variant_id' => $productVariant->id,
+                ])->first();
+
+                if ($inventory) {
+                    // Nếu bản ghi tồn tại, cập nhật quantity
+                    $inventory->update([
+                        'ware_house_id' => $request->ware_house_id,
+                        'quantity' => $item['quantity'],
+                        'updated_at' => now(),
+                    ]);
+                } else {
+                    // Nếu không tồn tại, tạo mới bản ghi
+                    Inventory::create([
+                        'ware_house_id' => $request->ware_house_id,
+                        'product_variant_id' => $productVariant->id,
+                        'quantity' => $item['quantity']
+                    ]);
+                }
             }
 
             $product->tags()->sync($dataProductTags);
