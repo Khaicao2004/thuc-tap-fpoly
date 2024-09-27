@@ -50,6 +50,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class);
+    }
     public function isAdmin()
     {
 

@@ -55,19 +55,34 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label for="min_order_value" class="form-label">Giá trị tối thiểu của đơn hàng (Số tiền)</label>
-                                        <input type="number"  class="form-control" name="min_order_value"
+                                        <label for="min_order_value" class="form-label">Giá trị tối thiểu của đơn hàng (Số
+                                            tiền)</label>
+                                        <input type="number" class="form-control" name="min_order_value"
                                             id="min_order_value">
                                     </div>
                                     <div class="mt-3">
                                         <label for="discount_type" class="form-label">Kiểu giảm giá</label>
                                         <select name="discount_type" id="discount_type" class="form-control">
+                                            <option value="">Chọn loại giảm giá</option>
                                             <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
                                             <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
                                             <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
                                             <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng</option>
                                         </select>
                                     </div>
+                                    <div class="mt-3">
+                                        <button type="button" class="btn btn-primary mb-3" id="select-products-btn">Chọn sản
+                                            phẩm áp dụng</button>
+                                        <div id="product-selection" style="display: none;">
+                                            <label for="products" class="form-label">Chọn sản phẩm áp dụng:</label>
+                                            <select id="products" class="form-select" id="products" name="products[]" multiple>
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
                                 </div>
 
                                 <div class="col-6">
@@ -83,15 +98,26 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label for="usage_limit" class="form-label">Số lượng mã</label>
-                                        <input type="number" class="form-control" id="usage_limit"
-                                            name="usage_limit" />
+                                        <label for="usage_limit" class="form-label">Giới hạn số lần sử dụng:</label>
+                                        <input type="number" class="form-control" id="usage_limit" name="usage_limit"
+                                            value="1" />
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="max_usage_per_user" class="form-label">Số lần tối đa mã có thể sử dụng
+                                            bởi mỗi người dùng:</label>
+                                        <input type="number" id="max_usage_per_user" class="form-control"
+                                            name="max_usage_per_user" value="1">
                                     </div>
                                     <div class="form-check form-switch form-switch-primary mt-5">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            name="is_active" id="is_active" value="1" checked>
+                                        <input class="form-check-input" type="checkbox" role="switch" name="is_active"
+                                            id="is_active" value="1" checked>
                                         <label class="form-check-label" for="is_active">Is Active</label>
                                     </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="description">Mô tả</label>
+                                    <textarea name="description" id="description" class="form-control"></textarea>
                                 </div>
                             </div>
                             <!--end row-->
@@ -117,18 +143,26 @@
 
 @section('script-libs')
     <script src="{{ asset('theme/admin/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection
 
 @section('scripts')
     <script>
-        ClassicEditor.create(document.querySelector('#content'))
-            .catch(error => {
-                console.error(error);
+        $(document).ready(function() {
+            $("#products, #discount_type").select2({
+                allowClear: true,
+                dropdownAutoWidth: true
             });
+            $('.js-example-basic-single').select2({
+                dropdownAutoWidth: true
+            });
+        });
+        document.getElementById('select-products-btn').onclick = function() {
+            var productSelection = document.getElementById('product-selection');
+            productSelection.style.display = productSelection.style.display === 'none' ? 'block' : 'none';
+        }
     </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection
 
 @section('style-libs')

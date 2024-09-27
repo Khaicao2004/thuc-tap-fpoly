@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -25,7 +26,8 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view(self::PATH_VIEW . __FUNCTION__);
+        $products = Product::query()->get();
+        return view(self::PATH_VIEW . __FUNCTION__, compact('products'));
     }
 
     /**
@@ -33,10 +35,15 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         try {
             $data = $request->all();
             $data['is_active'] ??= 0;
-            Coupon::query()->create($data);
+            $coupon = Coupon::query()->create($data);
+        
+            if ($request->products) {
+                $coupon->products()->sync($request->products);
+            }
             return redirect()->route('admin.coupons.index')->with('success', 'Thêm mã giảm giá thành công');
         } catch (\Exception $exception) {
             Log::error('Lỗi thêm mã giảm giá ' . $exception->getMessage());
@@ -57,7 +64,8 @@ class CouponController extends Controller
      */
     public function edit(Coupon $coupon)
     {
-        return view(self::PATH_VIEW . __FUNCTION__, compact('coupon'));
+        $products = Product::query()->get();
+        return view(self::PATH_VIEW . __FUNCTION__, compact('coupon','products'));
     }
 
     /**
@@ -69,6 +77,14 @@ class CouponController extends Controller
             $data = $request->all();
             $data['is_active'] ??= 0;
             $coupon->update($data);
+
+            if ($request->products) {
+                $coupon->products()->sync($request->products);
+            }else{
+                $coupon->products()->sync([]);
+
+            }
+            
             return back()->with('success', 'Cập nhật giảm giá thành công');
         } catch (\Exception $exception) {
             Log::error('Lỗi Cập nhật mã giảm giá ' . $exception->getMessage());
@@ -81,6 +97,7 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
+        $coupon->products()->sync([]);
         $coupon->delete();
         return back()->with('success', 'Xóa thành công');
     }

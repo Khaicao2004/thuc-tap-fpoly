@@ -21,7 +21,7 @@ return new class extends Migration
             //user_id chỉ dùng để xác định nó là thằng nào trên hệ thống 
             $table->foreignIdFor(User::class)->constrained();
             // ma giam gia 
-            $table->foreignIdFor(Coupon::class)->constrained();
+            $table->foreignIdFor(Coupon::class)->nullable()->constrained();
 
             // Lưu lại toàn bộ thông tin của người đặt hàng 
             $table->string('user_name');

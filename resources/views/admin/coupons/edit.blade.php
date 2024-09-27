@@ -67,34 +67,50 @@
                                         <label for="discount_type" class="form-label">Kiểu giảm giá</label>
                                         <select name="discount_type" id="discount_type" class="form-control">
                                             @if ($coupon->discount_type == 'fixed_product')
-
-                                            <option value="fixed_product" selected>Giảm giá theo sản phẩm cố định</option>
-                                            <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
-                                            <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
-                                            <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng</option>
-
+                                                <option value="fixed_product" selected>Giảm giá theo sản phẩm cố định
+                                                </option>
+                                                <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
+                                                <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
+                                                <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng
+                                                </option>
                                             @elseif ($coupon->discount_type == 'fixed_cart')
-
-                                            <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
-                                            <option value="fixed_cart" selected>Giảm giá theo giỏ hàng cố định</option>
-                                            <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
-                                            <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng</option>
-
+                                                <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
+                                                <option value="fixed_cart" selected>Giảm giá theo giỏ hàng cố định</option>
+                                                <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
+                                                <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng
+                                                </option>
                                             @elseif ($coupon->discount_type == 'percent_product')
-
-                                            <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
-                                            <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
-                                            <option value="percent_product" selected>Giảm giá theo phần trăm sản phẩm</option>
-                                            <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng</option>
-
+                                                <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
+                                                <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
+                                                <option value="percent_product" selected>Giảm giá theo phần trăm sản phẩm
+                                                </option>
+                                                <option value="percent_cart">Giảm giá theo phần trăm giá trị giỏ hàng
+                                                </option>
                                             @else
-                                            <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
-                                            <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
-                                            <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
-                                            <option value="percent_cart" selected>Giảm giá theo phần trăm giá trị giỏ hàng</option>
+                                                <option value="fixed_product">Giảm giá theo sản phẩm cố định</option>
+                                                <option value="fixed_cart">Giảm giá theo giỏ hàng cố định</option>
+                                                <option value="percent_product">Giảm giá theo phần trăm sản phẩm</option>
+                                                <option value="percent_cart" selected>Giảm giá theo phần trăm giá trị giỏ
+                                                    hàng</option>
                                             @endif
-                                           
+
                                         </select>
+                                    </div>
+                                    <div class="mt-3">
+                                        <!-- Sản phẩm chỉ hiển thị khi giảm giá theo sản phẩm -->
+                                        <div id="product-selection"
+                                            style="{{ in_array($coupon->discount_type, ['fixed_product', 'percent_product']) ? 'block' : 'none' }}">
+                                            <label for="products" class="form-label">Chọn sản phẩm:</label>
+                                            <select name="products[]" class="form-select" id="products" multiple>
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}"
+                                                        {{ $coupon->products->contains($product->id) ? 'selected' : '' }}>
+                                                        {{ $product->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -112,15 +128,27 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label for="usage_limit" class="form-label">Số lượng mã</label>
+                                        <label for="usage_limit" class="form-label">Giới hạn số lần sử dụng:</label>
                                         <input type="number" class="form-control" id="usage_limit" name="usage_limit"
                                             value="{{ $coupon->usage_limit }}" />
                                     </div>
+                                    <div class="mt-3">
+                                        <label for="max_usage_per_user" class="form-label">Số lần tối đa mã có thể sử dụng
+                                            bởi mỗi người dùng:</label>
+                                        <input type="number" id="max_usage_per_user" class="form-control"
+                                            name="max_usage_per_user" value="{{ $coupon->max_usage_per_user }}">
+                                    </div>
                                     <div class="form-check form-switch form-switch-primary mt-5">
                                         <input class="form-check-input" type="checkbox" role="switch" name="is_active"
-                                            id="is_active" value="1" @if ($coupon->is_active == true) checked @endif>
+                                            id="is_active" value="1"
+                                            @if ($coupon->is_active == true) checked @endif>
                                         <label class="form-check-label" for="is_active">Is Active</label>
                                     </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="description">Mô tả</label>
+                                    <textarea name="description" id="description" class="form-control">{{ $coupon->description }}</textarea>
                                 </div>
                             </div>
                             <!--end row-->
@@ -146,18 +174,40 @@
 
 @section('script-libs')
     <script src="{{ asset('theme/admin/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection
 
 @section('scripts')
     <script>
-        ClassicEditor.create(document.querySelector('#content'))
-            .catch(error => {
-                console.error(error);
+        $(document).ready(function() {
+            $("#products, #discount_type").select2({
+                allowClear: true,
+                dropdownAutoWidth: true
             });
-    </script>
+            $('.js-example-basic-single').select2({
+                dropdownAutoWidth: true
+            });
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            function toggleProductSelection() {
+                var value = $('#discount_type').val();
+                var productSelection = $('#product-selection');
+
+                // Show product selection if the discount type is for product
+                if (value === 'fixed_product' || value === 'percent_product') {
+                    productSelection.show();
+                } else {
+                    productSelection.hide();
+                }
+            }
+            toggleProductSelection();
+
+            // Handle change event for discount_type using Select2
+            $('#discount_type').on('change.select2', function() {
+                toggleProductSelection();
+            });
+        });
+    </script>
 @endsection
 
 @section('style-libs')

@@ -15,12 +15,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('coupon_user', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Coupon::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Order::class)->constrained();
+            $table->unsignedInteger('usage_count')->default(0); // Số lần mã được sử dụng bởi người dùng
             $table->timestamp('used_at')->nullable();  // Thời điểm mã giảm giá được sử dụng
-            $table->timestamps();
+
+            $table->primary([ 'coupon_id','user_id' ]);
         });
     }
 

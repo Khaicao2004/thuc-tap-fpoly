@@ -17,6 +17,8 @@ class Coupon extends Model
         'min_order_value',
         'usage_limit',
         'used',
+        'max_usage_per_user',
+        'description',
         'is_active',
         'discount_type',
     ];
@@ -24,4 +26,12 @@ class Coupon extends Model
     protected $casts = [
         'is_active' => 'boolean'
     ];
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

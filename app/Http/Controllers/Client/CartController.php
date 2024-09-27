@@ -111,41 +111,6 @@ class CartController extends Controller
         }
     }
 
-    // public function update(Request $request, $variantId)
-    // {
-    //     $request->validate([
-    //         'quantity' => 'required|integer|min:1', // Đảm bảo quantity là số nguyên và lớn hơn 0
-    //     ]);
-
-    //     // Tìm sản phẩm trong giỏ hàng
-    //     $cart = session()->get('cart');
-    //     if (isset($cart[$variantId])) {
-    //         // Cập nhật số lượng
-    //         $cart[$variantId]['quantity'] = $request->quantity;
-
-    //         // Lưu lại giỏ hàng
-    //         session()->put('cart', $cart);
-
-    //         // Tính toán lại tổng
-    //         $totalAmount = 0; // Tính tổng tiền
-    //         foreach ($cart as $item) {
-    //             $totalAmount += $item['price'] * $item['quantity'];
-    //         }
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'adjustedQuantity' => $cart[$variantId]['quantity'],
-    //             'itemTotal' => $cart[$variantId]['price'] * $cart[$variantId]['quantity'],
-    //             'totalAmount' => $totalAmount,
-    //             'message' => 'Cập nhật thành công.',
-    //         ]);
-    //     }
-
-    //     return response()->json(['success' => false, 'message' => 'Sản phẩm không tìm thấy.']);
-    // }
-
-
-
     public function update(Request $request, $variantId)
     {
         $request->validate([

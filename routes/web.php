@@ -34,23 +34,15 @@ Route::get('about', function () {
     return view('client.about');
 })->name('about');
 
-Route::get('blog-details', function () {
-    return view('client.blog-details');
-})->name('blogDetails');
 
-Route::get('shop', function () {
-    return view('client.shop');
-})->name('shop');
-
-Route::get('shopping-cart', function () {
-    return view('client.shopping-cart');
-})->name('shoppingCart');
-
-Route::get('checkout', function () {
-    return view('client.checkout');
-})->name('checkout');
 Route::get('check-out', [OrderController::class , 'showCheckout'])->name('checkout');
 Route::post('order/save', [OrderController::class, 'save'])->name('order.save');
+
+// mã giảm giá
+Route::post('apply/coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
+Route::post('remove/coupon', [OrderController::class, 'removeCoupon'])->name('remove.coupon');
+
+
 Route::get('cart/list', [CartController::class, 'list'])->name('cart.list');
 Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::delete('/cart/remove/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
