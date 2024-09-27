@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WareHouseController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\OrderController;
 
 
 Route::prefix('admin')
@@ -27,4 +28,5 @@ Route::prefix('admin')
     Route::resource('warehouses', WareHouseController::class);
     Route::resource('inventories', controller: InventoryController::class);
     Route::get('/', [CatalogueController::class, 'index']);
+    Route::resource('orders',OrderController::class);
 });

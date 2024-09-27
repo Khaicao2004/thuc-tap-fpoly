@@ -27,7 +27,7 @@ class Order extends Model
     const STATUS_ORDER_CONFIRMED        = 'confirmed';
     const STATUS_ORDER_PREPARING_GOODS  = 'preparing_goods';
     const STATUS_ORDER_SHIPPING         = 'shipping';
-    const STATUS_ORDER_DELIVERED        = 'delivered';  
+    const STATUS_ORDER_DELIVERED        = 'delivered';
     const STATUS_ORDER_CANCELED         = 'canceled';
 
     const STATUS_PAYMENT_UNPAID         = 'unpaid';
@@ -57,5 +57,8 @@ class Order extends Model
     }
     public function orderItems(){
        return $this->hasMany(OrderItem::class);
+    }
+    public function coupon(){
+        return $this->belongsTo(Coupon::class);
     }
 }
