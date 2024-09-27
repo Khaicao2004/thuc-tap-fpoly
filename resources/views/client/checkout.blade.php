@@ -28,13 +28,13 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" name="user_address" id="user_address" class="form-control" value="{{ auth()->user()?->address }}>
+                                <input type="text" name="user_address" id="user_address" class="form-control" value="{{ auth()->user()?->address }}">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text" name="user_phone" id="user_phone" class="form-control" value="{{ auth()->user()?->phone }}>
+                                        <input type="text" name="user_phone" id="user_phone" class="form-control" value="{{ auth()->user()?->phone }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
