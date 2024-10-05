@@ -34,7 +34,7 @@ class OrderController extends Controller
             ->whereDate('start_date', '<=', now())
             ->whereDate('end_date', '>=', now())
             ->first();
-        // dd($coupon); 
+        // dd($coupon);
         if (!$coupon) {
             return back()->with([
                 'alert-type' => 'error',
@@ -177,7 +177,7 @@ class OrderController extends Controller
                         'product_img_thumbnail' => $item['img_thumbnail'],
                         'product_price_regular' => $item['price_regular'],
                         'product_price_sale' => $item['price_sale'],
-                        'variant_image' => $item['image'],
+                        'variant_image' => $item['image'] ?? $item['img_thumbnail'],
                         'variant_price' => $item['price'],
                         'variant_size_name' => $item['size']['name'],
                         'variant_color_name' => $item['color']['name'],
@@ -237,6 +237,7 @@ class OrderController extends Controller
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();
+            dd($exception->getMessage());
             Log::error('Lỗi đặt hàng' . $exception->getMessage());
             return back()->with('error', 'Lỗi đặt hàng');
         }
