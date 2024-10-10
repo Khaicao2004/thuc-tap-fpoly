@@ -233,6 +233,58 @@
                         </ul>
                     </div>
                 </li>
+
+                   <li class="nav-item">
+                       <a href="#sidebarWareHouse" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarWareHouse" data-key="t-signin">
+                           <i class="bx bx-news"></i>
+                           Tin tức
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarWareHouse">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.blogs.index') }}" class="nav-link" data-key="t-basic">
+                                       <i class="fas fa-list"></i> <!-- Icon for "Danh sách" -->
+                                       Danh sách
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.blogs.create') }}" class="nav-link" data-key="t-cover">
+                                       <i class="fas fa-plus-circle"></i> <!-- Icon for "Thêm mới" -->
+                                       Thêm mới
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
+
+
+                   <li class="nav-item">
+                       <a href="#sidebarSuppliers" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarSuppliers" data-key="t-signin">
+                           <i class="bx bx-store"></i>
+                           Nhà cung cấp
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarSuppliers">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.suppliers.index') }}" class="nav-link"
+                                       data-key="t-basic">
+                                       <i class="fas fa-list"></i> <!-- Icon for "Danh sách" -->
+                                       Danh sách
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.suppliers.create') }}" class="nav-link"
+                                       data-key="t-cover">
+                                       <i class="fas fa-plus-circle"></i> <!-- Icon for "Thêm mới" -->
+                                       Thêm mới
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
+
                </ul>
            </div>
            <!-- Sidebar -->
