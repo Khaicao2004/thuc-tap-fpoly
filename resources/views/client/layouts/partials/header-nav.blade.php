@@ -15,7 +15,7 @@
                             <li><a href="{{ route('about') }}">About Us</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{ route('blog') }}">Blog</a></li>
+                    <li><a href="{{ route('blogs.list') }}">Blog</a></li>
                     <li><a href="{{ route('contact') }}">Contacts</a></li>
                 </ul>
             </nav>
@@ -67,6 +67,7 @@
                 .dropdown-menu {
                     display: none; /* Ẩn menu theo mặc định */
                 }
+
                 .topbar-user:hover .dropdown-menu {
                     display: block; /* Hiển thị menu khi hover */
                 }
