@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Client\ShopController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,3 +53,12 @@ Route::post('/cart/update/{variantId}', [CartController::class, 'update'])->name
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//search
+
+Route::post('search', [ShopController::class, 'search'])->name('search');
+
+//shop
+Route::get('shop/{slug?}/{tagId?}',[ShopController::class, 'shop'])->name('shop');
+Route::post('filter',[ShopController::class, 'filter'])->name('filter');
