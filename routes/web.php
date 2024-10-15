@@ -34,6 +34,10 @@ Route::get('about', function () {
     return view('client.about');
 })->name('about');
 
+Route::get('/orders', [OrderController::class, 'list'])->name('orders.list');
+
+Route::post('/orders/cancel/{id}', [OrderController::class, 'cancel'])->name('orders.cancel');
+
 
 Route::get('check-out', [OrderController::class , 'showCheckout'])->name('checkout');
 Route::post('order/save', [OrderController::class, 'save'])->name('order.save');
