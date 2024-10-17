@@ -27,17 +27,20 @@ class HomeController extends Controller
     // dd($productHotDeals);
     return view('client.index', compact('productHotDeals','productGoodDeals','productNews'));
    }
-   public function detail($slug){
-    $product = Product::with('variants')
-    ->where('slug', $slug)->first();
-    $colors = ProductColor::query()->pluck('name', 'id')->all();
-    $sizes = ProductSize::query()->pluck('name', 'id')->all();
-    $galleries = ProductGallery::where('product_id', $product->id)->pluck('image','id');
-    $relatedProducts = Product::query()
-        ->where('catalogue_id', $product->catalogue_id) // sản phẩm cùng danh mục
-        ->where('id', '!=', $product->id) // không lấy chính sản phẩm đang xem
-        ->limit(4) // giới hạn lấy 4 sản phẩm
-        ->get();
-    return view('client.shop-details', data: compact('product', 'colors', 'sizes', 'galleries', 'relatedProducts'));
+   public function detail($slug)
+   {
+       $product = Product::query()->with('variants')->where('slug', $slug)->first();
+       $colors = ProductColor::query()->pluck('name', 'id')->all();
+       $sizes = ProductSize::query()->pluck('name', 'id')->all();
+       $galleries = ProductGallery::query()->where('product_id', $product->id)->pluck('image', 'id');
+
+       $relatedProducts = Product::query()
+           ->where('catalogue_id', $product->catalogue_id) // sản phẩm cùng danh mục
+           ->where('id', '!=', $product->id) // không lấy chính sản phẩm đang xem
+           ->limit(4) // giới hạn lấy 4 sản phẩm
+           ->get();
+       // dd($relatedProducts->toArray());
+
+       return view('client.shop-details', compact('product', 'colors', 'sizes', 'galleries', 'relatedProducts'));
    }
 }

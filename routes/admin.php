@@ -29,4 +29,9 @@ Route::prefix('admin')
     Route::resource('inventories', controller: InventoryController::class);
     Route::get('/', [CatalogueController::class, 'index']);
     Route::resource('orders',OrderController::class);
+    Route::prefix('restore')->group(function(){
+        Route::get('trash', function(){
+            return view('admin.layouts.trash');
+        })->name('trash');
+    });
 });
