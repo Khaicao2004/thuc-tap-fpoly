@@ -46,6 +46,9 @@
                                 <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                                 <span class="align-middle">Profile</span>
                             </a> --}}
+                            <button class="dropdown-item">
+                                <a href="{{ route('orders.list') }}" class="text-dark">Đơn hàng</a>
+                            </button>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
