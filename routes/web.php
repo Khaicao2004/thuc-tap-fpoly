@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Client\CommentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,6 +49,8 @@ Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::delete('/cart/remove/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update/{variantId}', [CartController::class, 'update'])->name('cart.update');
 
+//bình luận
+Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');
 
 Auth::routes();
 

@@ -183,8 +183,9 @@ class OrderController extends Controller
                         'variant_color_name' => $item['color']['name'],
 
                     ];
-                    // dd($dataItem,$item);
+                    // dd($dataItem);
                 }
+                
                 if (session()->has('coupon')) {
                     $coupon = Coupon::where('name', session('coupon')['name'])->first();
                     $coupon->increment('used');
@@ -208,14 +209,16 @@ class OrderController extends Controller
                     'user_note' => request('user_note'),
                     'total_price' =>  $totalAmount,
                 ]);
+                // dd($dataItem);
                 $dataUser = User::find($user->id);
                 $dataUser->update([
                     'phone' => request('user_phone'),
                     'address' => request('user_address'),
                 ]);
                 foreach ($dataItem as $item) {
+                    // dd($dataItem,$item);
                     $item['order_id'] = $order->id;
-
+                    
                     OrderItem::query()->create($item);
                     $inventory = Inventory::where('product_variant_id', $item['product_variant_id'])
                         ->first();
@@ -237,7 +240,7 @@ class OrderController extends Controller
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception->getMessage());
+            // dd($exception->getMessage());    
             Log::error('Lỗi đặt hàng' . $exception->getMessage());
             return back()->with('error', 'Lỗi đặt hàng');
         }

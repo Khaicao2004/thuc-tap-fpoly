@@ -46,12 +46,13 @@
                             <div class="product__item__text">
                                 <h6>{{ $new->name }}</h6>
                                 <a href="{{ route('shop.detail', $new->slug) }}" class="add-cart">+ Xem chi tiết</a>
-                                <div class="rating">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <div class="rating-summary">
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span class="star {{ $i <= round($new->averageRating) ? 'selected' : '' }}">&#9733;</span>
+                                        @endfor
+                                        <p>{{ round($new->averageRating, 1) }} / 5 ({{ $new->comments->count() }} reviews)</p> <!-- Sử dụng $new->comments->count() để lấy tổng số đánh giá -->
+                                    </div>
                                 </div>
                                 @if ($new->price_sale)
                                     <h5>
@@ -62,7 +63,6 @@
                                         {{ number_format($new->price_regular, 0, ',', '.') }}đ
                                     </h5>
                                 @endif
-
                             </div>
                         </div>
                     </div>
@@ -91,12 +91,13 @@
                             <div class="product__item__text">
                                 <h6>{{ $hotDeal->name }}</h6>
                                 <a href="{{ route('shop.detail', $hotDeal->slug) }}" class="add-cart">+ Xem chi tiết</a>
-                                <div class="rating">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <div class="rating-summary">
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span class="star {{ $i <= round($hotDeal->averageRating) ? 'selected' : '' }}">&#9733;</span>
+                                        @endfor
+                                        <p>{{ round($hotDeal->averageRating, 1) }} / 5 ({{ $hotDeal->comments->count() }} reviews)</p> <!-- Sử dụng $new->comments->count() để lấy tổng số đánh giá -->
+                                    </div>
                                 </div>
                                 @if ($hotDeal->price_sale)
                                     <h5>
@@ -135,12 +136,13 @@
                             <div class="product__item__text">
                                 <h6>{{ $goodDeal->name }}</h6>
                                 <a href="{{ route('shop.detail', $goodDeal->slug) }}" class="add-cart">+ Xem chi tiết</a>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <div class="rating-summary">
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span class="star {{ $i <= round($goodDeal->averageRating) ? 'selected' : '' }}">&#9733;</span>
+                                        @endfor
+                                        <p>{{ round($goodDeal->averageRating, 1) }} / 5 ({{ $goodDeal->comments->count() }} reviews)</p> <!-- Sử dụng $new->comments->count() để lấy tổng số đánh giá -->
+                                    </div>
                                 </div>
                                 @if ($goodDeal->price_sale)
                                     <h5>

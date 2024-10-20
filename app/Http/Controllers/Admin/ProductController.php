@@ -118,7 +118,7 @@ class ProductController extends Controller
         $variants = Product::with('variants')->find($product->id)->variants;
         $galleries = Product::with('galleries')->find($product->id)->galleries;
         $productTags = Product::with('tags')->find($product->id)->tags;
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags', 'wareHouse'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags','variants', 'galleries', 'productTags', 'wareHouse'));
     }
 
     /**

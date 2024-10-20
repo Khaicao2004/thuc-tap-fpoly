@@ -35,30 +35,33 @@ class Order extends Model
 
 
     protected $fillable = [
-            'user_id',
-            'coupon_id',
-            'user_name',
-            'user_email',
-            'user_phone',
-            'user_address',
-            'user_note',
-            'is_ship_user_same_user',
-            'ship_user_name',
-            'ship_user_email',
-            'ship_user_phone',
-            'ship_user_address',
-            'ship_user_note',
-            'status_order',
-            'status_payment',
-            'total_price',
+        'user_id',
+        'coupon_id',
+        'user_name',
+        'user_email',
+        'user_phone',
+        'user_address',
+        'user_note',
+        'is_ship_user_same_user',
+        'ship_user_name',
+        'ship_user_email',
+        'ship_user_phone',
+        'ship_user_address',
+        'ship_user_note',
+        'status_order',
+        'status_payment',
+        'total_price',
     ];
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function orderItems(){
-       return $this->hasMany(OrderItem::class);
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
     }
-    public function coupon(){
+    public function coupon()
+    {
         return $this->belongsTo(Coupon::class);
     }
 }
