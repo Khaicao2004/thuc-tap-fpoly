@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 vh-100 ">
         <h1 class="text-center mb-4">Danh Sách Đơn Hàng</h1>
 
         <div class="row mb-3 justify-content-center">

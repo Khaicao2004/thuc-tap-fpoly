@@ -27,23 +27,25 @@ class HomeController extends Controller
             ->where('is_new', true)
             ->limit(6)
             ->get();
-        return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews'));
-    }
-    public function detail($slug)
-    {
-        $product = Product::with('variants')
-            ->where('slug', $slug)->first();
-
-        $colors = ProductColor::query()->pluck('name', 'id')->all();
-        $sizes = ProductSize::query()->pluck('name', 'id')->all();
-        $galleries = ProductGallery::where('product_id', $product->id)->pluck('image', 'id');
-
-        // Lấy sản phẩm liên quan
-        // Lấy 5 bài viết tin tức mới nhất
+              // Lấy 5 bài viết tin tức mới nhất
         $blogs = Blog::query()->latest()->take(3)->get();
-        // Trả về view và truyền dữ liệu sản phẩm cùng với tin tức
-        return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews', 'blogs'));
+        return view('client.index', compact('productHotDeals', 'blogs', 'productGoodDeals', 'productNews'));
     }
+    // public function detail($slug)
+    // {
+    //     $product = Product::with('variants')
+    //         ->where('slug', $slug)->first();
+
+    //     $colors = ProductColor::query()->pluck('name', 'id')->all();
+    //     $sizes = ProductSize::query()->pluck('name', 'id')->all();
+    //     $galleries = ProductGallery::where('product_id', $product->id)->pluck('image', 'id');
+
+    //     // Lấy sản phẩm liên quan
+    //     // Lấy 5 bài viết tin tức mới nhất
+    //     $blogs = Blog::query()->latest()->take(3)->get();
+    //     // Trả về view và truyền dữ liệu sản phẩm cùng với tin tức
+    //     return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews', 'blogs'));
+    // }
     public function detail($slug)
     {
         $product = Product::query()->with('variants')->where('slug', $slug)->first();
