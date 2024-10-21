@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\ProductColorController;
@@ -31,6 +32,7 @@ Route::prefix('admin')
     Route::resource('orders',OrderController::class);
     Route::resource('blogs', BlogController::class);
     Route::resource('suppliers', SupplierController::class);
+    Route::resource('comments', CommentController::class);
 
     Route::prefix('restore')->group(function(){
         Route::get('trash', function(){
