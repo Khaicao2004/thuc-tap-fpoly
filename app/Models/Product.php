@@ -60,4 +60,31 @@ class Product extends Model
     {
         return $this->belongsToMany(Coupon::class);
     }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    // Thêm các thuộc tính ảo để IDE không báo lỗi
+    protected $appends = ['averageRating', 'ratingCount'];
+
+    /**
+     * Truy cập thuộc tính ảo averageRating
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->attributes['averageRating'] ?? $this->comments()->avg('rating');
+    }
+
+    /**
+     * Truy cập thuộc tính ảo ratingCount
+     */
+    public function getRatingCountAttribute()
+    {
+        return $this->attributes['ratingCount'] ?? $this->comments()->count();
+    }
 }
