@@ -9,13 +9,13 @@
             <nav class="header__menu mobile-menu">
                 <ul>
                     <li class="active"><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="">Shop</a></li>
+                    <li><a href="{{ route('shop') }}">Shop</a></li>
                     <li><a href="#">Pages</a>
                         <ul class="dropdown">
                             <li><a href="{{ route('about') }}">About Us</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{ route('blog') }}">Blog</a></li>
+                    <li><a href="{{ route('blogs.list') }}">Blog</a></li>
                     <li><a href="{{ route('contact') }}">Contacts</a></li>
                 </ul>
             </nav>
@@ -46,6 +46,9 @@
                                 <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                                 <span class="align-middle">Profile</span>
                             </a> --}}
+                            <button class="dropdown-item">
+                                <a href="{{ route('orders.list') }}" class="text-dark">Đơn hàng</a>
+                            </button>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
@@ -67,6 +70,7 @@
                 .dropdown-menu {
                     display: none; /* Ẩn menu theo mặc định */
                 }
+
                 .topbar-user:hover .dropdown-menu {
                     display: block; /* Hiển thị menu khi hover */
                 }

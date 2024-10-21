@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Blog;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductGallery;
@@ -26,7 +27,6 @@ class HomeController extends Controller
             ->where('is_new', true)
             ->limit(6)
             ->get();
-        // dd($productHotDeals);
         return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews'));
     }
     public function detail($slug)
@@ -39,6 +39,18 @@ class HomeController extends Controller
         $galleries = ProductGallery::where('product_id', $product->id)->pluck('image', 'id');
 
         // Lấy sản phẩm liên quan
+        // Lấy 5 bài viết tin tức mới nhất
+        $blogs = Blog::query()->latest()->take(3)->get();
+        // Trả về view và truyền dữ liệu sản phẩm cùng với tin tức
+        return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews', 'blogs'));
+    }
+    public function detail($slug)
+    {
+        $product = Product::query()->with('variants')->where('slug', $slug)->first();
+        $colors = ProductColor::query()->pluck('name', 'id')->all();
+        $sizes = ProductSize::query()->pluck('name', 'id')->all();
+        $galleries = ProductGallery::query()->where('product_id', $product->id)->pluck('image', 'id');
+
         $relatedProducts = Product::query()
             ->where('catalogue_id', $product->catalogue_id) // sản phẩm cùng danh mục
             ->where('id', '!=', $product->id) // không lấy chính sản phẩm đang xem
@@ -115,5 +127,4 @@ class HomeController extends Controller
 
     return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews'));
 }
-
 }

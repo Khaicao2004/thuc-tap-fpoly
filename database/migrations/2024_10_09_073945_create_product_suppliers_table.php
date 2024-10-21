@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Product;
+use App\Models\Supplier;
+use App\Models\Suppliers;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('image');
-            $table->text('content');
+        Schema::create('product_suppliers', function (Blueprint $table) {
+            $table->foreignIdFor(Product::class)->constrained();
+            $table->foreignIdFor(Supplier::class)->constrained();
+            $table->primary(['product_id', 'supplier_id']);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('product_suppliers');
     }
 };

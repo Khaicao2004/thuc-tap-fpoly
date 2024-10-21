@@ -36,6 +36,7 @@
 
             <div class="page-content">
                 <div class="container-fluid">
+                  @include('admin.layouts.partials.trash-nav')
                     @yield('content')
                 </div>
                 <!-- container-fluid -->

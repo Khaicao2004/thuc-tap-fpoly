@@ -245,4 +245,35 @@ class OrderController extends Controller
             return back()->with('error', 'Lỗi đặt hàng');
         }
     }
+    public function list(Request $request){
+        $query = Order::where('user_id', auth()->id());
+
+        // Kiểm tra nếu có từ khóa tìm kiếm
+        if ($request->has('search') && $request->input('search') != '') {
+            $searchTerm = $request->input('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('id', 'like', "%$searchTerm%")
+                  ->orWhere('user_name', 'like', "%$searchTerm%");
+            });
+        }
+    
+        $orders = $query->with('orderItems')->get();
+    
+        return view('client.order', compact('orders'));
+    }
+    public function cancel($id)
+    {
+        $order = Order::find($id);
+
+        if ($order) {
+            // Cập nhật trạng thái đơn hàng
+            $order->status_order = 'canceled'; // Sử dụng giá trị tương ứng trong STATUS_ORDER
+            $order->save();
+
+            return response()->json(['message' => 'Đơn hàng đã được hủy thành công.']);
+        }
+
+        return response()->json(['message' => 'Đơn hàng không tồn tại.'], 404);
+    }
+
 }
