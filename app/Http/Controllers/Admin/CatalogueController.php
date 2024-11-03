@@ -80,12 +80,11 @@ class CatalogueController extends Controller
      */
     public function edit(Catalogue $catalogue)
     {
-        $parentCatalogue = Catalogue::query()->with(['children'])->whereNull('parent_id')->get();
-        // dd($parentCatalogue);    
+        $parentCatalogue = Catalogue::query()->with(['children'])->whereNull('parent_id')->get();  
         return view(self::PATH_VIEW . __FUNCTION__, compact('catalogue','parentCatalogue'));
     }
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage.    
      */
     public function update(UpdateCatelogueRequest $request, Catalogue $catalogue)
     {

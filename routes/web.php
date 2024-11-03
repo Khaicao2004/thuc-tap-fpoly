@@ -4,8 +4,10 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\ListBlogController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\CommentController;
+use App\Http\Controllers\Client\ShopController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,16 +29,19 @@ Route::get('contact', function () {
     return view('client.contact');
 })->name('contact');
 
-Route::get('blog', function () {
-    return view('client.blog');
-})->name('blog');
+Route::get('blogs/list', [ListBlogController::class, 'list'])->name('blogs.list');
+Route::get('blogs/show/{id}', [ListBlogController::class, 'show'])->name('blogs.show');
 
 Route::get('about', function () {
     return view('client.about');
 })->name('about');
 
+Route::get('/orders', [OrderController::class, 'list'])->name('orders.list');
 
-Route::get('check-out', [OrderController::class , 'showCheckout'])->name('checkout');
+Route::post('/orders/cancel/{id}', [OrderController::class, 'cancel'])->name('orders.cancel');
+
+
+Route::get('check-out', [OrderController::class, 'showCheckout'])->name('checkout');
 Route::post('order/save', [OrderController::class, 'save'])->name('order.save');
 
 // mã giảm giá
@@ -55,3 +60,12 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comment.sto
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//search
+
+Route::post('search', [ShopController::class, 'search'])->name('search');
+
+//shop
+Route::get('shop/{slug?}/{tagId?}',[ShopController::class, 'shop'])->name('shop');
+Route::post('filter',[ShopController::class, 'filter'])->name('filter');

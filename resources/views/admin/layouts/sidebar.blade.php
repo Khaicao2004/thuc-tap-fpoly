@@ -175,64 +175,116 @@
                        </div>
                    </li>
                    <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarStorage" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarStorage">
-                        <i class="ri-bubble-chart-fill"></i> <span data-key="t-authentication">Kho hàng</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarStorage">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="#sidebarWareHouse" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarwareHouse"
-                                    data-key="t-signin">Thông tin kho
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarWareHouse">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.warehouses.index') }}" class="nav-link"
-                                                data-key="t-basic"> Danh sách
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.warehouses.create') }}" class="nav-link"
-                                                data-key="t-cover"> Thêm mới
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarInventorie" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarInventorie"
-                                    data-key="t-signin">Quản lý kho
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarInventorie">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.inventories.index') }}" class="nav-link"
-                                                data-key="t-basic"> Danh sách
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarOrders" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarOrders">
-                        <i class="ri-store-3-line"></i>
-                        <span data-key="t-layouts">Đơn hàng</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarOrders">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.orders.index') }}" class="nav-link">Danh sách</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                       <a class="nav-link menu-link" href="#sidebarStorage" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarStorage">
+                           <i class="ri-bubble-chart-fill"></i> <span data-key="t-authentication">Kho hàng</span>
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarStorage">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="#sidebarWareHouse" class="nav-link" data-bs-toggle="collapse"
+                                       role="button" aria-expanded="false" aria-controls="sidebarwareHouse"
+                                       data-key="t-signin">Thông tin kho
+                                   </a>
+                                   <div class="collapse menu-dropdown" id="sidebarWareHouse">
+                                       <ul class="nav nav-sm flex-column">
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.warehouses.index') }}" class="nav-link"
+                                                   data-key="t-basic"> Danh sách
+                                               </a>
+                                           </li>
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.warehouses.create') }}" class="nav-link"
+                                                   data-key="t-cover"> Thêm mới
+                                               </a>
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="#sidebarInventorie" class="nav-link" data-bs-toggle="collapse"
+                                       role="button" aria-expanded="false" aria-controls="sidebarInventorie"
+                                       data-key="t-signin">Quản lý kho
+                                   </a>
+                                   <div class="collapse menu-dropdown" id="sidebarInventorie">
+                                       <ul class="nav nav-sm flex-column">
+                                           <li class="nav-item">
+                                               <a href="{{ route('admin.inventories.index') }}" class="nav-link"
+                                                   data-key="t-basic"> Danh sách
+                                               </a>
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link menu-link" href="#sidebarOrders" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarOrders">
+                           <i class="ri-store-3-line"></i>
+                           <span data-key="t-layouts">Đơn hàng</span>
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarOrders">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.orders.index') }}" class="nav-link">Danh sách</a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
+                   <li class="nav-item">
+                       <a href="#sidebarWareHouse" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarWareHouse" data-key="t-signin">
+                           <i class="bx bx-news"></i>
+                           Tin tức
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarWareHouse">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.blogs.index') }}" class="nav-link" data-key="t-basic">
+                                       <i class="fas fa-list"></i> <!-- Icon for "Danh sách" -->
+                                       Danh sách
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.blogs.create') }}" class="nav-link" data-key="t-cover">
+                                       <i class="fas fa-plus-circle"></i> <!-- Icon for "Thêm mới" -->
+                                       Thêm mới
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
+                   <li class="nav-item">
+                       <a href="#sidebarSuppliers" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarSuppliers" data-key="t-signin">
+                           <i class="bx bx-store"></i>
+                           Nhà cung cấp
+                       </a>
+                       <div class="collapse menu-dropdown" id="sidebarSuppliers">
+                           <ul class="nav nav-sm flex-column">
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.suppliers.index') }}" class="nav-link"
+                                       data-key="t-basic">
+                                       <i class="fas fa-list"></i> <!-- Icon for "Danh sách" -->
+                                       Danh sách
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('admin.suppliers.create') }}" class="nav-link"
+                                       data-key="t-cover">
+                                       <i class="fas fa-plus-circle"></i> <!-- Icon for "Thêm mới" -->
+                                       Thêm mới
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </li>
+                   <li class="nav-item">
+                       <a href="{{ route('admin.trash') }}" class="nav-link"><i class=" bx bx-trash"></i>Thùng
+                           rác</a>
+                   </li>
                </ul>
            </div>
            <!-- Sidebar -->

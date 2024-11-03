@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Catalogue;
 use App\Models\Comment;
+use App\Models\Blog;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductGallery;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function home($slug = null)
+    public function home()
     {
         $productHotDeals = Product::where('is_active', true)
             ->where('is_hot_deal', true)
@@ -27,37 +27,32 @@ class HomeController extends Controller
             ->where('is_new', true)
             ->limit(6)
             ->get();
-        // dd($productHotDeals);
-        $catalogue = Catalogue::whereNull('parent_id')
-            ->orderBy('id', 'asc')
-            ->take(8) 
-            ->limit(5) 
-            ->with('children.children') 
-            ->get();
-        // dd( $catalogue);
-        $cataloguePro = [];
-
-        foreach ($catalogue as $cat) {
-            $cataloguePro[$cat->id] = $cat->products()->where('is_active', true)->get();
-        }
-
-        $currentCatalogue = $slug ? Catalogue::where('slug', $slug)->first() : null;
-
-        $products = $currentCatalogue ? Product::where('catalogue_id', $currentCatalogue->id)
-            ->orWhereIn('catalogue_id', $currentCatalogue->children()->pluck('id'))
-            ->get() : collect(); 
-        return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews', 'catalogue', 'cataloguePro', 'currentCatalogue', 'products'));
+              // Lấy 5 bài viết tin tức mới nhất
+        $blogs = Blog::query()->latest()->take(3)->get();
+        return view('client.index', compact('productHotDeals', 'blogs', 'productGoodDeals', 'productNews'));
     }
+    // public function detail($slug)
+    // {
+    //     $product = Product::with('variants')
+    //         ->where('slug', $slug)->first();
+
+    //     $colors = ProductColor::query()->pluck('name', 'id')->all();
+    //     $sizes = ProductSize::query()->pluck('name', 'id')->all();
+    //     $galleries = ProductGallery::where('product_id', $product->id)->pluck('image', 'id');
+
+    //     // Lấy sản phẩm liên quan
+    //     // Lấy 5 bài viết tin tức mới nhất
+    //     $blogs = Blog::query()->latest()->take(3)->get();
+    //     // Trả về view và truyền dữ liệu sản phẩm cùng với tin tức
+    //     return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews', 'blogs'));
+    // }
     public function detail($slug)
     {
-        $product = Product::with('variants')
-            ->where('slug', $slug)->first();
-
+        $product = Product::query()->with('variants')->where('slug', $slug)->first();
         $colors = ProductColor::query()->pluck('name', 'id')->all();
         $sizes = ProductSize::query()->pluck('name', 'id')->all();
-        $galleries = ProductGallery::where('product_id', $product->id)->pluck('image', 'id');
+        $galleries = ProductGallery::query()->where('product_id', $product->id)->pluck('image', 'id');
 
-        // Lấy sản phẩm liên quan
         $relatedProducts = Product::query()
             ->where('catalogue_id', $product->catalogue_id) // sản phẩm cùng danh mục
             ->where('id', '!=', $product->id) // không lấy chính sản phẩm đang xem
@@ -104,34 +99,34 @@ class HomeController extends Controller
     }
 
     public function rating()
-    {
-        $products = Product::where('is_active', true)
-            ->with('comments') // Đảm bảo rằng bạn đã thiết lập quan hệ comments với model Product
-            ->get();
+{
+    $products = Product::where('is_active', true)
+        ->with('comments') // Đảm bảo rằng bạn đã thiết lập quan hệ comments với model Product
+        ->get();
 
-        foreach ($products as $product) {
-            $ratingCounts = [
-                '5' => $product->comments()->where('rating', 5)->count(),
-                '4' => $product->comments()->where('rating', 4)->count(),
-                '3' => $product->comments()->where('rating', 3)->count(),
-                '2' => $product->comments()->where('rating', 2)->count(),
-                '1' => $product->comments()->where('rating', 1)->count(),
-            ];
+    foreach ($products as $product) {
+        $ratingCounts = [
+            '5' => $product->comments()->where('rating', 5)->count(),
+            '4' => $product->comments()->where('rating', 4)->count(),
+            '3' => $product->comments()->where('rating', 3)->count(),
+            '2' => $product->comments()->where('rating', 2)->count(),
+            '1' => $product->comments()->where('rating', 1)->count(),
+        ];
 
-            $totalRatings = ($ratingCounts['5'] * 5) + ($ratingCounts['4'] * 4) + ($ratingCounts['3'] * 3) + ($ratingCounts['2'] * 2) + ($ratingCounts['1'] * 1);
-            $ratingCount = array_sum($ratingCounts);
+        $totalRatings = ($ratingCounts['5'] * 5) + ($ratingCounts['4'] * 4) + ($ratingCounts['3'] * 3) + ($ratingCounts['2'] * 2) + ($ratingCounts['1'] * 1);
+        $ratingCount = array_sum($ratingCounts);
 
-            // Tính trung bình đánh giá
-            $averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
+        // Tính trung bình đánh giá
+        $averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
 
-            // Gán trung bình đánh giá vào sản phẩm
-            $product->averageRating = $averageRating;
-        }
-
-        $productHotDeals = $products->where('is_hot_deal', true)->take(6);
-        $productGoodDeals = $products->where('is_good_deal', true)->take(6);
-        $productNews = $products->where('is_new', true)->take(6);
-
-        return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews'));
+        // Gán trung bình đánh giá vào sản phẩm
+        $product->averageRating = $averageRating;
     }
+
+    $productHotDeals = $products->where('is_hot_deal', true)->take(6);
+    $productGoodDeals = $products->where('is_good_deal', true)->take(6);
+    $productNews = $products->where('is_new', true)->take(6);
+
+    return view('client.index', compact('productHotDeals', 'productGoodDeals', 'productNews'));
+}
 }
