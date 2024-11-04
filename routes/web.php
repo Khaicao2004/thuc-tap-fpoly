@@ -69,3 +69,6 @@ Route::post('search', [ShopController::class, 'search'])->name('search');
 //shop
 Route::get('shop/{slug?}/{tagId?}',[ShopController::class, 'shop'])->name('shop');
 Route::post('filter',[ShopController::class, 'filter'])->name('filter');
+
+//Cổng thanh toán
+Route::post('/vnpay_payment',[OrderController::class, 'vnpay_payment']);
