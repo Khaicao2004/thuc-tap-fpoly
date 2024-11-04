@@ -1,7 +1,8 @@
 <?php
 
-
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\ProductColorController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WareHouseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\OrderController;
-
+use App\Http\Controllers\Admin\SupplierController;
 
 Route::prefix('admin')
 ->as('admin.')
@@ -29,6 +30,10 @@ Route::prefix('admin')
     Route::resource('inventories', controller: InventoryController::class);
     Route::get('/', [CatalogueController::class, 'index']);
     Route::resource('orders',OrderController::class);
+    Route::resource('blogs', BlogController::class);
+    Route::resource('suppliers', SupplierController::class);
+    Route::resource('comments', CommentController::class);
+
     Route::prefix('restore')->group(function(){
         Route::get('trash', function(){
             return view('admin.layouts.trash');

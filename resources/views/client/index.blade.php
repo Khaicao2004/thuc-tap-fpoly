@@ -46,12 +46,13 @@
                             <div class="product__item__text">
                                 <h6>{{ $new->name }}</h6>
                                 <a href="{{ route('shop.detail', $new->slug) }}" class="add-cart">+ Xem chi tiết</a>
-                                <div class="rating">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <div class="rating-summary">
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span class="star {{ $i <= round($new->averageRating) ? 'selected' : '' }}">&#9733;</span>
+                                        @endfor
+                                        <p>{{ round($new->averageRating, 1) }} / 5 ({{ $new->comments->count() }} reviews)</p> <!-- Sử dụng $new->comments->count() để lấy tổng số đánh giá -->
+                                    </div>
                                 </div>
                                 @if ($new->price_sale)
                                     <h5>
@@ -62,7 +63,6 @@
                                         {{ number_format($new->price_regular, 0, ',', '.') }}đ
                                     </h5>
                                 @endif
-
                             </div>
                         </div>
                     </div>
@@ -91,12 +91,13 @@
                             <div class="product__item__text">
                                 <h6>{{ $hotDeal->name }}</h6>
                                 <a href="{{ route('shop.detail', $hotDeal->slug) }}" class="add-cart">+ Xem chi tiết</a>
-                                <div class="rating">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <div class="rating-summary">
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span class="star {{ $i <= round($hotDeal->averageRating) ? 'selected' : '' }}">&#9733;</span>
+                                        @endfor
+                                        <p>{{ round($hotDeal->averageRating, 1) }} / 5 ({{ $hotDeal->comments->count() }} reviews)</p> <!-- Sử dụng $new->comments->count() để lấy tổng số đánh giá -->
+                                    </div>
                                 </div>
                                 @if ($hotDeal->price_sale)
                                     <h5>
@@ -135,12 +136,13 @@
                             <div class="product__item__text">
                                 <h6>{{ $goodDeal->name }}</h6>
                                 <a href="{{ route('shop.detail', $goodDeal->slug) }}" class="add-cart">+ Xem chi tiết</a>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <div class="rating-summary">
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span class="star {{ $i <= round($goodDeal->averageRating) ? 'selected' : '' }}">&#9733;</span>
+                                        @endfor
+                                        <p>{{ round($goodDeal->averageRating, 1) }} / 5 ({{ $goodDeal->comments->count() }} reviews)</p> <!-- Sử dụng $new->comments->count() để lấy tổng số đánh giá -->
+                                    </div>
                                 </div>
                                 @if ($goodDeal->price_sale)
                                     <h5>
@@ -247,42 +249,25 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <span>Latest News</span>
-                        <h2>Fashion New Trends</h2>
+                        <span>Tin tức mới nhất</span>
+                        <h2>Xu hướng thời trang</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="/theme/client/img/blog/blog-1.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="/theme/client/img/icon/calendar.png" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="#">Read More</a>
+                @foreach ($blogs as $item)
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="blog__item">
+                            <div class="blog__item__pic set-bg" data-setbg="{{ Storage::url($item->image) }}"></div>
+                            <div class="blog__item__text">
+                                <span><img src="/theme/client/img/icon/calendar.png" alt="">
+                                    {{ $item->created_at->format('d F Y') }}</span>
+                                <h5>{{ $item->name }}</h5>
+                                <a href="{{ route('blogs.show', $item->id) }}">Xem thêm</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="/theme/client/img/blog/blog-2.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="/theme/client/img/icon/calendar.png" alt=""> 21 February 2020</span>
-                            <h5>Eternity Bands Do Last Forever</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="/theme/client/img/blog/blog-3.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="/theme/client/img/icon/calendar.png" alt=""> 28 February 2020</span>
-                            <h5>The Health Benefits Of Sunglasses</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

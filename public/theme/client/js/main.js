@@ -214,3 +214,34 @@
     });
 
 })(jQuery);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Hàm để cập nhật đánh giá của người dùng
+    document.querySelectorAll('.rating-product .star').forEach(star => {
+        star.addEventListener('click', function() {
+            // Lấy giá trị đánh giá từ data-value
+            const ratingValue = this.getAttribute('data-value');
+            
+            // Cập nhật giá trị cho input ẩn
+            document.getElementById('rating-value').value = ratingValue;
+            
+            // Xóa lớp 'selected' từ tất cả các sao
+            document.querySelectorAll('.rating-product .star').forEach(s => {
+                s.classList.remove('selected');
+            });
+
+            // Đánh dấu các sao từ 1 đến ratingValue và tô màu vàng
+            document.querySelectorAll('.rating-product .star').forEach(star => {
+                if (star.getAttribute('data-value') <= ratingValue) {
+                    star.classList.add('selected');
+                }
+            });
+        });
+    });
+});
+
+
+
+
+

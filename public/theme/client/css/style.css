@@ -945,13 +945,7 @@ ol {
 	background: #111111;
 }
 
-.product__item.sale .product__item__text .rating i {
-	color: #f7941d;
-}
 
-.product__item.sale .product__item__text .rating i:nth-last-child(1) {
-	color: #b7b7b7;
-}
 
 .product__item:hover .product__item__pic .product__hover {
 	right: 20px;
@@ -1078,15 +1072,7 @@ ol {
 	transition: all, 0.3s;
 }
 
-.product__item__text .rating {
-	margin-bottom: 6px;
-}
 
-.product__item__text .rating i {
-	font-size: 14px;
-	color: #b7b7b7;
-	margin-right: -5px;
-}
 
 .product__item__text h5 {
 	color: #0d0d0d;
@@ -1615,22 +1601,7 @@ ol {
 	margin-bottom: 10px;
 }
 
-.product__details__text .rating {
-	margin-bottom: 20px;
-}
 
-.product__details__text .rating i {
-	font-size: 15px;
-	color: #f7941d;
-	display: inline-block;
-	margin-right: -5px;
-}
-
-.product__details__text .rating span {
-	display: inline-block;
-	color: #3d3d3d;
-	margin-left: 5px;
-}
 
 .product__details__text h3 {
 	color: #0d0d0d;
@@ -1889,7 +1860,10 @@ ol {
 .product__details__tab__content {
 	padding-top: 35px;
 }
-
+.custom-btn {
+	padding: 0.25rem 0.5rem; /* Điều chỉnh padding để làm cho nút nhỏ hơn */
+	font-size: 0.75rem; /* Điều chỉnh kích thước chữ nếu cần */
+}
 .note {
 	color: #111111;
 	font-size: 18px;
@@ -3849,3 +3823,120 @@ ol {
 		height: 250px;
 	}
 }
+
+
+
+/* CSS cho form bình luận */
+.product__details__tab__contentform {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+}
+
+.product__details__tab__content form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#for_comment {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+    min-height: 100px;
+}
+
+.product__details__tab__content .form-group input[type="submit"] {
+    background-color: #0d0d0d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+	width: 100px;
+    transition: background-color 0.3s ease;
+}
+
+.product__details__tab__content .form-group input[type="submit"]:hover {
+    background-color: #512525;
+}
+
+/* CSS cho bảng bình luận */
+.product__details__tab__content .table-comment {
+    width: 100%;
+    margin-top: 20px;
+	background-color: #f2f2f2;
+    border-collapse: collapse;	
+	padding-top: 10px;
+	border-radius: 3px;
+}
+.product__details__tab__content .table-comment .box-comment{
+    border-bottom: 1px solid #ddd;
+	padding-top: 15px;
+}
+
+.product__details__tab__content .ten {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.product__details__tab__content .ten h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product__details__tab__content  .noidung p {
+    font-size: 14px;
+    background-color: #f2f2f2;
+	padding-bottom: 20px;
+}
+
+/* Responsive chỉnh sửa */
+@media (max-width: 768px) {
+    .product__details__tab__content form .form-group {
+        flex-direction: column;
+    }
+
+    .product__details__tab__content .ten {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product__details__tab__content .noidung p {
+        margin: 0;
+    }
+}
+
+
+.rating-summary .star {
+    font-size: 2em; /* Kích thước sao */
+    color: lightgray; /* Màu sao mặc định */
+}
+
+.rating-summary .star.selected {
+    color: gold; /* Màu vàng cho sao đã được chọn */
+}
+
+.rating-product {
+    direction: ltr; /* Hiển thị ngôi sao từ trái sang phải */
+}
+
+.rating-product .star {
+    font-size: 2em; /* Kích thước sao */
+    color: lightgray; /* Màu sao mặc định */
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.rating-product .star.selected {
+    color: gold; /* Màu vàng cho sao đã chọn */
+}
+
