@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class CatalogueController extends Controller
 {
@@ -18,12 +19,53 @@ class CatalogueController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $data = Catalogue::query()->latest('id')->get();
-        // dd($data);
-        return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
+    public function index(Request $request)
+{
+    if ($request->ajax()) {
+        $query = Catalogue::with('parent', 'children')->latest('id');
+
+        // Lọc theo ngày tháng nếu có
+        if ($request->has('startDate') && $request->has('endDate')) {
+            $startDate = $request->get('startDate');
+            $endDate = $request->get('endDate');
+
+            if ($startDate && $endDate) {
+                // Chuyển đổi định dạng ngày để bao gồm cả ngày
+                $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();
+                $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();
+
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        }
+
+        return DataTables::of($query)
+            ->addColumn('cover', function($row) {
+                return asset(Storage::url($row->cover)); // URL hình ảnh
+            })
+            ->addColumn('children', function($row) {
+                return $row->children->pluck('name')->toArray(); // Lấy tên danh mục con
+            })
+            ->addColumn('is_active', function($row) {
+                return $row->is_active ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>';
+            })
+            ->addColumn('action', function ($row) {
+                $editUrl = route('admin.catalogues.edit', $row->id);
+                $deleteUrl = route('admin.catalogues.destroy', $row->id);
+
+                return '
+                    <a href="' . $editUrl . '" class="btn btn-warning">Sửa</a>
+                    <form action="' . $deleteUrl . '" method="post" style="display:inline;">
+                        ' . csrf_field() . method_field('DELETE') . '
+                        <button type="submit" class="btn btn-danger" onclick="return confirm(\'Bạn có chắc chắn muốn xóa?\')">Xóa</button>
+                    </form>
+                ';
+            })
+            ->rawColumns(['cover', 'children', 'is_active', 'action'])
+            ->make(true);
     }
+
+    return view('admin.catalogues.index');
+}
 
     /**
      * Show the form for creating a new resource.
