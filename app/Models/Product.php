@@ -15,6 +15,7 @@ class Product extends Model
         'name',
         'slug',
         'sku',
+        'supplier_id',
         'img_thumbnail',
         'price_regular',
         'price_sale',
@@ -86,5 +87,10 @@ class Product extends Model
     public function getRatingCountAttribute()
     {
         return $this->attributes['ratingCount'] ?? $this->comments()->count();
+    }
+
+    public function suppliers()
+    {
+        return $this->belongsToMany(Supplier::class);
     }
 }

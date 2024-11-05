@@ -46,8 +46,8 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="supplier_id" class="form-label">Kho Hàng:</label>
-                                        <select id="supplier_id" name="supplier_id" class="form-select">
+                                        <label for="ware_house_id" class="form-label">Kho Hàng:</label>
+                                        <select id="ware_house_id" name="ware_house_id" class="form-select">
                                             <option value="">Chọn kho sản phẩm</option>
                                             @foreach ($warehouses as $warehouse)
                                                 <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
@@ -121,29 +121,29 @@
                                 <div class="col-md-4">
                                     <div class="mt-3">
                                         <label for="name" class="form-label">Tên sản phẩm</label>
-                                        <input type="text" class="form-control" name="name[]" />
+                                        <input type="text" class="form-control" name="detail[0][name]" />
                                     </div>
 
                                     <div class="mt-3">
                                         <label for="sku" class="form-label">Mã sản phẩm</label>
-                                        <input type="text" class="form-control" name="sku[]"
+                                        <input type="text" class="form-control" name="detail[0][sku]"
                                             value="{{ strtoupper(Str::random(8)) }}" />
                                     </div>
 
                                     <div class="mt-3">
                                         <label for="price_regular" class="form-label">Giá nhập</label>
                                         <input type="number" value="0" class="form-control"
-                                            name="price_regular[]">
+                                            name="detail[0][price_regular]">
                                     </div>
 
                                     <div class="mt-3">
                                         <label for="price_sale" class="form-label">Giá bán</label>
-                                        <input type="number" value="0" class="form-control" name="price_sale[]">
+                                        <input type="number" value="0" class="form-control" name="detail[0][price_sale]">
                                     </div>
 
                                     <div class="mt-3">
                                         <label for="catalogue_id" class="form-label">Danh mục sản phẩm</label>
-                                        <select name="catalogue_id[]" class="form-select">
+                                        <select name="detail[0][catalogue_id]" class="form-select">
                                             @foreach ($catalogues as $id => $name)
                                                 <option value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
@@ -152,7 +152,7 @@
 
                                     <div class="mt-3">
                                         <label for="img_thumbnail" class="form-label">Ảnh sản phẩm</label>
-                                        <input type="file" class="form-control" name="img_thumbnail[]" />
+                                        <input type="file" class="form-control" name="detail[0][img_thumbnail]" />
                                     </div>
                                 </div>
 
@@ -160,34 +160,34 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="is_active[]"
+                                                <input class="form-check-input" type="checkbox" name="detail[is_active]"
                                                     checked>
                                                 <label class="form-check-label">Is Active</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="is_hot_deal[]"
+                                                <input class="form-check-input" type="checkbox" name="detail[is_hot_deal]"
                                                     checked>
                                                 <label class="form-check-label">Is Hot Deal</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="is_good_deal[]"
+                                                <input class="form-check-input" type="checkbox" name="detail[is_good_deal]"
                                                     checked>
                                                 <label class="form-check-label">Is Good Deal</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="is_new[]" checked>
+                                                <input class="form-check-input" type="checkbox" name="detail[is_new]" checked>
                                                 <label class="form-check-label">Is New</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="is_show_home[]"
+                                                <input class="form-check-input" type="checkbox" name="detail[is_show_home]"
                                                     checked>
                                                 <label class="form-check-label">Is Show Home</label>
                                             </div>
@@ -197,19 +197,19 @@
                                     <div class="row">
                                         <div class="mt-3">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea class="form-control" name="description[]" rows="2"></textarea>
+                                            <textarea class="form-control" name="detail[description]" rows="2"></textarea>
                                         </div>
                                         <div class="mt-3">
                                             <label for="material" class="form-label">Material</label>
-                                            <textarea class="form-control" name="material[]" rows="2"></textarea>
+                                            <textarea class="form-control" name="detail[material]" rows="2"></textarea>
                                         </div>
                                         <div class="mt-3">
                                             <label for="user_manual" class="form-label">User Manual</label>
-                                            <textarea class="form-control" name="user_manual[]" rows="2"></textarea>
+                                            <textarea class="form-control" name="detail[user_manual]" rows="2"></textarea>
                                         </div>
                                         <div class="mt-3">
                                             <label for="content" class="form-label">Content</label>
-                                            <textarea class="form-control" name="content[]">{{ old('content') }}</textarea>
+                                            <textarea class="form-control" name="detail[content]">{{ old('content') }}</textarea>
                                             @error('content')
                                                 <span class="d-block text-danger mt-2">{{ $message }}</span>
                                             @enderror
@@ -286,7 +286,7 @@
                                                 <label for="gallery_default" class="form-label">Image</label>
                                                 <div class="d-flex">
                                                     <input type="file" class="form-control"
-                                                        name="product_galleries[][]" id="gallery_default" multiple>
+                                                        name="product_galleries[]" id="gallery_default" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,7 +309,7 @@
                                             <div class="col-md-12">
                                                 <div>
                                                     <label for="tags" class="form-label">Tag</label>
-                                                    <select name="tags[][]" id="tags"
+                                                    <select name="tags[]" id="tags"
                                                         class="js-example-basic-multiple" multiple="multiple">
                                                         @foreach ($tags as $id => $name)
                                                             <option value="{{ $id }}">{{ $name }}

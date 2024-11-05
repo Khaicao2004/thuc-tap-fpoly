@@ -65,18 +65,18 @@ class ImportOrderController extends Controller
             DB::beginTransaction();
 
             // Kiểm tra toàn bộ dữ liệu request
-            // dd($request->all());
+            dd($request->all());
 
             // Tạo đơn nhập kho
             $importOrder = ImportOrder::create([
                 'user_id' => $request->user_id,
-                'storage_id' => $request->storage_id,
+                'ware_house_id' => $request->ware_house_id,
                 'supplier_id' => $request->supplier_id,
                 'price_paid' => $request->price_paid,
                 'still_in_debt' => $request->still_in_debt,
                 'status' => $request->status,
                 'note' => $request->note,
-                'total' => is_array($request->details) ? array_sum(array_column($request->details, 'total')) : 0,
+                'total' => 1000,
                 'date_added' => now(),
             ]);
 
@@ -84,8 +84,8 @@ class ImportOrderController extends Controller
             // dd($importOrder);
 
             // Kiểm tra xem $request->details có phải là mảng và không rỗng
-            if (isset($request->details) && is_array($request->details) && count($request->details) > 0) {
-                foreach ($request->details as $detail) {
+            if (isset($request->detail) && is_array($request->detail) && count($request->detail) > 0) {
+                foreach ($request->detail as $detail) {
                     // Kiểm tra sản phẩm đã tồn tại dựa trên SKU
                     $existingProduct = Product::where('sku', $detail['sku'])->first();
 

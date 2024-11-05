@@ -216,6 +216,22 @@
                                        </ul>
                                    </div>
                                </li>
+
+                               <li class="nav-item">
+                                <a href="#sidebarimportorders" class="nav-link" data-bs-toggle="collapse"
+                                    role="button" aria-expanded="false" aria-controls="sidebarInventorie"
+                                    data-key="t-signin">Nhập kho
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarimportorders">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.importorders.index') }}" class="nav-link"
+                                                data-key="t-basic"> Danh sách
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                            </ul>
                        </div>
                    </li>

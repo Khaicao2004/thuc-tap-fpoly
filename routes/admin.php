@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ImportOrderController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\WareHouseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Models\ImportOrder;
 
 Route::prefix('admin')
 ->as('admin.')
@@ -33,6 +35,7 @@ Route::prefix('admin')
     Route::resource('blogs', BlogController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('comments', CommentController::class);
+    Route::resource('importorders', ImportOrderController::class);
 
     Route::prefix('restore')->group(function(){
         Route::get('trash', function(){
