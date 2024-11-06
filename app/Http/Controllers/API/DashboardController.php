@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Catalogue;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
@@ -122,11 +123,35 @@ class DashboardController extends Controller
 
         return response()->json($bestSellingProduct);
     }
-    public function recentOrders(){
+    public function recentOrders()
+    {
         $recentOrders = Order::with('orderItems')
-        ->where('created_at', '>=', now()->subDays(7))
-        ->orderByDesc('created_at')
-        ->get();    
+            ->where('created_at', '>=', now()->subDays(7))
+            ->orderByDesc('created_at')
+            ->get();
         return response()->json($recentOrders);
+    }
+
+    public function getTotalCategory()
+    {
+        // Lấy danh sách danh mục sản phẩm và số lượng sản phẩm trong từng danh mục
+        $categories = Catalogue::withCount('products')->get();
+
+        // Tính tổng số lượng sản phẩm thuộc các danh mục
+        $totalProducts = $categories->sum('products_count');
+
+        // Tạo mảng dữ liệu để lưu thông tin danh mục và tỷ lệ phần trăm
+        $data = [];
+        foreach ($categories as $category) {
+            $percentage = ($totalProducts > 0) ? ($category->products_count / $totalProducts) * 100 : 0;
+            $data[] = [
+                'name' => $category->name,
+                'count' => $category->products_count,
+                'percentage' => round($percentage, 2), // Làm tròn phần trăm
+            ];
+        }
+
+        // Trả về phản hồi JSON với dữ liệu
+        return response()->json($data);
     }
 }
