@@ -14,6 +14,11 @@
             <div class="checkout__form">
                 <div class="row">
                     <div class="col-lg-8 col-md-6 mb-3">
+                        <form action="{{ url('/vnpay_payment') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="total" value="{{ $totalAmount }}">
+                            <button type="submit" name="redirect" class="btn-warning">Thanh toán online</button>
+                        </form>
                         <form action="{{ route('order.save') }}" method="POST">
                             @csrf
                             <h6 class="checkout__title">Chi tiết thanh toán</h6>
@@ -28,13 +33,15 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" name="user_address" id="user_address" class="form-control" value="{{ auth()->user()?->address }}">
+                                <input type="text" name="user_address" id="user_address" class="form-control"
+                                    value="{{ auth()->user()?->address }}">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text" name="user_phone" id="user_phone" class="form-control" value="{{ auth()->user()?->phone }}">
+                                        <input type="text" name="user_phone" id="user_phone" class="form-control"
+                                            value="{{ auth()->user()?->phone }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -49,7 +56,9 @@
                                 <p>Ghi chú<span>*</span></p>
                                 <input type="text" name="user_note" id="user_note" class="form-control">
                             </div>
-                            <button type="submit" class="site-btn">Tiến hành thanh toán</button>
+                            <div class="row">
+                                <button type="submit" class="site-btn mr-3">Tiến hành thanh toán</button>
+                            </div>
                         </form>
                     </div>
                     <div class="col-lg-4 col-md-6">
@@ -83,7 +92,8 @@
                                 @if (session()->has('coupon'))
                                     <li>Tổng đơn hàng:
                                         <span>{{ number_format(session('coupon.totalAmountBeforeDiscount')) }}
-                                            đ</span></li>
+                                            đ</span>
+                                    </li>
                                     <li>Giá trị mã: <span>
                                             @if (session('coupon.discount_type') == 'percent_cart' || session('coupon.discount_type') == 'percent_product')
                                                 {{ session('coupon.discount_value') }} %

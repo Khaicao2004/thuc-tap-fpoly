@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Log;
+use Str;
 
 class OrderController extends Controller
 {
@@ -20,7 +21,7 @@ class OrderController extends Controller
         // dd($request->all());
         $cart = session('cart', []);
         $totalAmount = 0;
-        foreach ($cart as  $item) {
+        foreach ($cart as $item) {
             $totalAmount += $item['quantity'] * $item['price'];
         }
         if (session()->has('coupon')) {
@@ -146,7 +147,7 @@ class OrderController extends Controller
         // session()->forget('coupon');
         $cart = session('cart', []);
         $totalAmount = 0;
-        foreach ($cart as  $item) {
+        foreach ($cart as $item) {
             $totalAmount += $item['quantity'] * $item['price'];
         }
         if (session()->has('coupon')) {
@@ -185,7 +186,7 @@ class OrderController extends Controller
                     ];
                     // dd($dataItem);
                 }
-                
+
                 if (session()->has('coupon')) {
                     $coupon = Coupon::where('name', session('coupon')['name'])->first();
                     $coupon->increment('used');
@@ -207,7 +208,7 @@ class OrderController extends Controller
                     'user_phone' => request('user_phone'),
                     'user_address' => request('user_address'),
                     'user_note' => request('user_note'),
-                    'total_price' =>  $totalAmount,
+                    'total_price' => $totalAmount,
                 ]);
                 // dd($dataItem);
                 $dataUser = User::find($user->id);
@@ -218,7 +219,7 @@ class OrderController extends Controller
                 foreach ($dataItem as $item) {
                     // dd($dataItem,$item);
                     $item['order_id'] = $order->id;
-                    
+
                     OrderItem::query()->create($item);
                     $inventory = Inventory::where('product_variant_id', $item['product_variant_id'])
                         ->first();
@@ -245,20 +246,21 @@ class OrderController extends Controller
             return back()->with('error', 'Lỗi đặt hàng');
         }
     }
-    public function list(Request $request){
+    public function list(Request $request)
+    {
         $query = Order::where('user_id', auth()->id());
 
         // Kiểm tra nếu có từ khóa tìm kiếm
         if ($request->has('search') && $request->input('search') != '') {
             $searchTerm = $request->input('search');
-            $query->where(function($q) use ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
                 $q->where('id', 'like', "%$searchTerm%")
-                  ->orWhere('user_name', 'like', "%$searchTerm%");
+                    ->orWhere('user_name', 'like', "%$searchTerm%");
             });
         }
-    
+
         $orders = $query->with('orderItems')->get();
-    
+
         return view('client.order', compact('orders'));
     }
     public function cancel($id)
@@ -276,4 +278,76 @@ class OrderController extends Controller
         return response()->json(['message' => 'Đơn hàng không tồn tại.'], 404);
     }
 
+    public function vnpay_payment(Request $request)
+    {
+        $data = $request->all();
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = route('home');
+        $vnp_TmnCode = "WMS545LO"; //Mã website tại VNPAY 
+        $vnp_HashSecret = "HUZ534RB66O3NX80CO8EBQ5DRXD3M6B4"; //Chuỗi bí mật
+
+        $vnp_TxnRef = Str::upper(Str::random(10));
+        $vnp_OrderInfo = "Thanh toán hóa đơn";
+        $vnp_OrderType = "TN SHOP";
+        $vnp_Amount = $data['total'] * 100;
+        $vnp_Locale = "VN";
+        $vnp_BankCode = "NCB";
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        //Add Params of 2.0.1 Version
+
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef,
+        );
+
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
+
+        // var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        $returnData = array(
+            'code' => '00',
+            'message' => 'success',
+            'data' => $vnp_Url
+        );
+        if (isset($_POST['redirect'])) {
+            header('Location: ' . $vnp_Url);
+            die();
+        } else {
+            echo json_encode($returnData);
+        }
+    }
 }
