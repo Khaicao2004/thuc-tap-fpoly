@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Log;
-use Str;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {

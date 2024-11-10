@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -87,5 +88,27 @@ class UserController extends Controller
         $model->delete();
 
         return back()->with('success', 'Xóa Thành công');
+    }
+
+    public function getRestore()
+    {
+        $data = User::onlyTrashed()->get();
+        return view('admin.Users.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $UserIds = $request->input('ids');
+            if ($UserIds) {
+                User::onlyTrashed()->whereIn('id', $UserIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
     }
 }

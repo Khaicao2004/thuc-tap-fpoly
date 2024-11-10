@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -65,5 +66,27 @@ class CommentController extends Controller
     {
         $comment->delete();
         return back()->with('success', 'Xóa bình luận thành công');
+    }
+
+    public function getRestore()
+    {
+        $data = Comment::onlyTrashed()->get();
+        return view('admin.comments.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    { 
+        // dd($request->all());
+        try {
+            $CommentIds = $request->input('ids');
+            if ($CommentIds) {
+                Comment::onlyTrashed()->whereIn('id', $CommentIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
     }
 }

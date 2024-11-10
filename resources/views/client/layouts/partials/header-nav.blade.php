@@ -5,7 +5,7 @@
                 <a href="{{ route('home') }}"><img src="/theme/client/img/logo.png" alt=""></a>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6">
+        {{-- <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
                 <ul>
                     <li class="active"><a href="{{ route('home') }}">Home</a></li>
@@ -19,7 +19,7 @@
                     <li><a href="{{ route('contact') }}">Contacts</a></li>
                 </ul>
             </nav>
-        </div>
+        </div> --}}
 
         <div class="col-lg-3 col-md-3">
             <div class="header__nav__option d-flex align-items-center justify-content-between">
@@ -114,6 +114,7 @@
                         @endif
                     </li>
                 @endforeach
+                <li class="active"><a href="{{route('shop')}}"><span class="icon"> </span>Shop</a></li>
                 <li class="active"><a href="#"><span class="icon"> </span>Tin tức</a></li>
                 <li class="active"><a href="#"><span class="icon"> </span>Giới thiệu</a></li>
                 <li class="active"><a href="#"><span class="icon"> </span>Liên hệ</a></li>

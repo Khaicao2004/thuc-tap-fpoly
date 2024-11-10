@@ -284,7 +284,7 @@
                             <a href="#">Read More</a>
                         </div>
                     </div>
-                </div>
+                </div>  
             </div>
         </div>
     </section>

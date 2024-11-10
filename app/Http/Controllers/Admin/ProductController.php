@@ -16,6 +16,7 @@ use App\Models\Tag;
 use App\Models\WareHouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -327,4 +328,25 @@ class ProductController extends Controller
         return [$dataProduct, $dataProductVariants, $dataProductGalleries, $dataProductTags, $dataDeleteGalleries];
     }
 
+    public function getRestore()
+    {
+        $data = Product::onlyTrashed()->get();
+        return view('admin.products.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $productIds = $request->input('ids');
+            if ($productIds) {
+                Product::onlyTrashed()->whereIn('id', $productIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
+    }
 }
