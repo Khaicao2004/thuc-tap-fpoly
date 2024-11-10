@@ -19,6 +19,9 @@ Route::prefix('admin')
 ->as('admin.')
 ->middleware(['auth', 'is_admin'])
 ->group(function () {
+    Route::get('/', function (){
+        return view('admin.dashboard');
+    })->name('dashboard');
     Route::resource('catalogues', CatalogueController::class);
     Route::resource('productcolors',ProductColorController::class);
     Route::resource('productsizes',ProductSizeController::class);
@@ -28,7 +31,6 @@ Route::prefix('admin')
     Route::resource('coupons', CouponController::class);
     Route::resource('warehouses', WareHouseController::class);
     Route::resource('inventories', controller: InventoryController::class);
-    Route::get('/', [CatalogueController::class, 'index']);
     Route::resource('orders',OrderController::class);
     Route::resource('blogs', BlogController::class);
     Route::resource('suppliers', SupplierController::class);
