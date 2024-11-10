@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\CartController;
@@ -72,3 +73,15 @@ Route::post('filter',[ShopController::class, 'filter'])->name('filter');
 
 //Cổng thanh toán
 Route::post('/vnpay_payment',[OrderController::class, 'vnpay_payment']);
+
+Route::prefix('restore')->group(function () {
+
+    // restore suppliers
+    Route::get('/suppliers', [SupplierController::class, 'getRestore'])->name('restore.suppliers');
+    Route::post('/suppliers', [SupplierController::class, 'restore']);
+
+    // restore users
+    Route::get('/users', [UserController::class, 'getRestore'])->name('restore.users');
+    Route::post('/users', [UserController::class, 'restore']);
+
+});
