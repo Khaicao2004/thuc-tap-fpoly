@@ -82,19 +82,18 @@ class SupplierController extends Controller
     public function getRestore()
     {
         $data = Supplier::onlyTrashed()->get();
-        return view('admin.Suppliers.restore', compact('data'));
+        
         return view('admin.suppliers.restore', compact('data'));
     }
     public function restore(Request $request)
     {
         // dd($request->all());
         try {
-            $SupplierIds = $request->input('ids');
-            if ($SupplierIds) {
-                Supplier::onlyTrashed()->whereIn('id', $SupplierIds)->restore();
+
             $supplierIds = $request->input('ids');
             if ($supplierIds) {
                 Supplier::onlyTrashed()->whereIn('id', $supplierIds)->restore();
+
                 return back()->with('success', 'Khôi phục bản ghi thành công.');
             } else {
                 return back()->with('error', 'Không bản ghi nào cần khôi phục.');
