@@ -41,8 +41,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Img Thumbnail</th>
                                 <th>Name</th>
+                                <th>Img Thumbnail</th>
+                                <th>Supplier</th>
                                 <th>SKU</th>
                                 <th>Catalogue</th>
                                 <th>Price Regular</th>
@@ -59,6 +60,7 @@
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
+                                    <td>{{ $item->name }}</td>
                                     <td>
                                         @php
                                             $url = $item->img_thumbnail;
@@ -68,7 +70,7 @@
                                         @endphp
                                         <img src="{{ $url }}" alt="" width="100px">
                                     </td>
-                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->supplier->name }}</td>
                                     <td>{{ $item->sku }}</td>
 
                                     <td>{{ $item->catalogue->name }}</td>

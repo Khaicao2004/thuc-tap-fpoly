@@ -12,6 +12,7 @@ use App\Models\ProductColor;
 use App\Models\ProductGallery;
 use App\Models\ProductSize;
 use App\Models\ProductVariant;
+use App\Models\Supplier;
 use App\Models\Tag;
 use App\Models\WareHouse;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::query()->with(['catalogue', 'tags'])->latest('id')->get();
+        $data = Product::query()->with(['catalogue', 'tags', 'supplier'])->latest('id')->get();
         return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
     }
 
@@ -36,12 +37,13 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $suppliers = Supplier::query()->pluck('name', 'id')->all();
         $wareHouse = WareHouse::query()->pluck('name', 'id')->all();
         $catalogues = Catalogue::query()->pluck('name', 'id')->all();
         $colors = ProductColor::query()->pluck('name', 'id')->all();
         $sizes = ProductSize::query()->pluck('name', 'id')->all();
         $tags = Tag::query()->pluck('name', 'id')->all();
-        return view(self::PATH_VIEW . __FUNCTION__, compact('catalogues', 'colors', 'sizes', 'tags', 'wareHouse'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('catalogues', 'colors', 'sizes', 'tags', 'wareHouse',  'suppliers'));
     }
 
     /**
@@ -126,6 +128,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $suppliers = Supplier::query()->pluck('name', 'id')->all();
         $wareHouse = WareHouse::query()->pluck('name', 'id')->all();
         $catalogues = Catalogue::query()->pluck('name', 'id')->all();
         $colors = ProductColor::query()->pluck('name', 'id')->all();
@@ -134,7 +137,7 @@ class ProductController extends Controller
         $variants = Product::with('variants')->find($product->id)->variants;
         $galleries = Product::with('galleries')->find($product->id)->galleries;
         $productTags = Product::with('tags')->find($product->id)->tags;
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags', 'wareHouse'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'catalogues', 'colors', 'sizes', 'tags', 'variants', 'galleries', 'productTags', 'wareHouse', 'suppliers'));
     }
 
     /**

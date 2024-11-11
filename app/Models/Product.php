@@ -12,6 +12,7 @@ class Product extends Model
     protected $fillable = [
         'catalogue_id',
         'ware_house_id',
+        'supplier_id',
         'name',
         'slug',
         'sku',
@@ -67,6 +68,9 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function supplier(){
+        return $this->belongsTo(Supplier::class);
     }
 
     // Thêm các thuộc tính ảo để IDE không báo lỗi
