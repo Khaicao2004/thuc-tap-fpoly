@@ -239,12 +239,12 @@
                        </div>
                    </li>
                    <li class="nav-item">
-                       <a href="#sidebarWareHouse" class="nav-link" data-bs-toggle="collapse" role="button"
-                           aria-expanded="false" aria-controls="sidebarWareHouse" data-key="t-signin">
+                       <a href="#sidebarBlog" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarBlog" data-key="t-signin">
                            <i class="bx bx-news"></i>
                            Tin tức
                        </a>
-                       <div class="collapse menu-dropdown" id="sidebarWareHouse">
+                       <div class="collapse menu-dropdown" id="sidebarBlog">
                            <ul class="nav nav-sm flex-column">
                                <li class="nav-item">
                                    <a href="{{ route('admin.blogs.index') }}" class="nav-link" data-key="t-basic">

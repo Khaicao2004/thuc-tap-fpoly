@@ -65,6 +65,18 @@
                                 Kho hàng
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('restore.users') }}">
+                                Người dùng
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('restore.suppliers') }}">
+                                Nhà cũng cập
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

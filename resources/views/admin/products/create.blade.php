@@ -46,6 +46,18 @@
                                 <div class="col-md-4">
 
                                     <div>
+                                        <label for="supplier_id" class="form-label">Nhà cung cấp</label>
+                                        <select id="" class="js-example-basic-single" name="supplier_id"
+                                            id="supplier_id">
+                                            @foreach ($suppliers as $id => $name)
+                                                <option value="{{ $id }}">
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="mt-3">
                                         <label for="ware_house_id" class="form-label">Kho hàng</label>
                                         <select id="" class="js-example-basic-single" name="ware_house_id"
                                             id="ware_house_id">
