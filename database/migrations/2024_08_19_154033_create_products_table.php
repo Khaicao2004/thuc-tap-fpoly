@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Catalogue;
+use App\Models\Supplier;
 use App\Models\WareHouse;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Catalogue::class)->constrained();
             $table->foreignIdFor(WareHouse::class)->constrained();
+            $table->foreignIdFor(Supplier::class)->constrained();
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('sku')->unique();
