@@ -72,7 +72,9 @@ Route::get('shop/{slug?}/{tagId?}',[ShopController::class, 'shop'])->name('shop'
 Route::post('filter',[ShopController::class, 'filter'])->name('filter');
 
 //Cổng thanh toán
-Route::post('/vnpay_payment',[OrderController::class, 'vnpay_payment']);
+Route::post('/vnpay_payment', [OrderController::class, 'vnpay_payment'])->name('vnpay.payment');
+//Thanh toán xong
+Route::get('/vnpay_return', [OrderController::class, 'vnpay_return'])->name('vnpay.return');
 
 Route::prefix('restore')->group(function () {
 
