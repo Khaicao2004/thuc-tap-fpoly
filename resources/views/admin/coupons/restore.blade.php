@@ -32,7 +32,7 @@
                                             @endif
 
                                             <thead class="table-light">
-                                                <form action="{{ route('admin.restore.users') }}" method="POST">
+                                                <form action="{{ route('admin.restore.coupons') }}" method="POST">
                                                     @csrf
                                                     <table id="example"
                                                         class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -41,34 +41,31 @@
                                                             <tr>
                                                                 <th><input type="checkbox" id="select-all"></th>
                                                                 <th>ID</th>
-                                                                <th>NAME</th>
-                                                                <th>EMAIL</th>
-                                                                <th>TYPE</th>
+                                                                <th>Tên mã</th>
+                                                                <th>Giá trị (Số tiền, hoặc %)</th>
+                                                                <th>Số tiền tối thiểu</th>
+                                                                <th>Số lượng mã</th>
+                                                                <th>Số lần được sử dụng</th>
+                                                                <th>Is_active</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($data as $user)
+                                                            @foreach ($data as $suppliers)
                                                                 <tr>
                                                                     <td>
                                                                         <input type="checkbox" name="ids[]"
-                                                                            value="{{ $user->id }}">
+                                                                            value="{{ $suppliers->id }}">
                                                                     </td>
-                                                                    <td>
-                                                                        {{ $user->id }}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{ $user->name }}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{ $user->email }}
-                                                                    </td>
-                                                                    <td>
-                                                                        @if($user->type == 'admin')
-                                                                        <span class="badge bg-primary">Admin</span>
-                                                                        @elseif($user->type == 'member')
-                                                                        <span class="badge bg-danger">Member</span>
-                                                                        @endif
-                                                                    </td>
+
+                                                                    <td>{{ $item->id }}</td>
+                                                                    <td>{{ $item->name }}</td>
+                                                                    <td>{{ $item->discount_value }}</td>
+                                                                    <td>{{ $item->min_order_value }}</td>
+                                                                    <td>{{ $item->usage_limit }}</td>
+                                                                    <td>{{ $item->used }}</td>
+                                                                    <td>{!! $item->is_active
+                                                                        ? '<span class="badge bg-primary">Còn hoạt động</span>'
+                                                                        : '<span class="badge bg-danger">Không hoạt động</span>' !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>

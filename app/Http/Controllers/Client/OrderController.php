@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Log;
-use Str;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -286,7 +286,7 @@ class OrderController extends Controller
         $vnp_TmnCode = "WMS545LO"; //Mã website tại VNPAY 
         $vnp_HashSecret = "HUZ534RB66O3NX80CO8EBQ5DRXD3M6B4"; //Chuỗi bí mật
 
-        $vnp_TxnRef = Str::upper(Str::random(10));
+        $vnp_TxnRef = str::upper(Str::random(10));
         $vnp_OrderInfo = "Thanh toán hóa đơn";
         $vnp_OrderType = "TN SHOP";
         $vnp_Amount = $data['total'] * 100;

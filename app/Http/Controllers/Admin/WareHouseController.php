@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\WareHouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WareHouseController extends Controller
 {
@@ -67,5 +68,27 @@ class WareHouseController extends Controller
     {
         $warehouse->delete();
         return back()->with('success', 'Xóa thuộc tính thành công');
+    }
+
+    public function getRestore()
+    {
+        $data = WareHouse::onlyTrashed()->get();
+        return view('admin.warehouses.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $warehouseIds = $request->input('ids');
+            if ($warehouseIds) {
+                WareHouse::onlyTrashed()->whereIn('id', $warehouseIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
     }
 }

@@ -32,7 +32,7 @@
                                             @endif
 
                                             <thead class="table-light">
-                                                <form action="{{ route('admin.restore.users') }}" method="POST">
+                                                <form action="{{ route('admin.restore.categories') }}" method="POST">
                                                     @csrf
                                                     <table id="example"
                                                         class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -40,35 +40,21 @@
                                                         <thead>
                                                             <tr>
                                                                 <th><input type="checkbox" id="select-all"></th>
-                                                                <th>ID</th>
-                                                                <th>NAME</th>
-                                                                <th>EMAIL</th>
-                                                                <th>TYPE</th>
+                                                                <th>Mã danh mục</th>
+                                                                <th>Tên danh mục</th>
+                                                                <th>Ngày xóa</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($data as $user)
+                                                            @foreach ($data as $category)
                                                                 <tr>
                                                                     <td>
                                                                         <input type="checkbox" name="ids[]"
-                                                                            value="{{ $user->id }}">
+                                                                            value="{{ $category->id }}">
                                                                     </td>
-                                                                    <td>
-                                                                        {{ $user->id }}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{ $user->name }}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{ $user->email }}
-                                                                    </td>
-                                                                    <td>
-                                                                        @if($user->type == 'admin')
-                                                                        <span class="badge bg-primary">Admin</span>
-                                                                        @elseif($user->type == 'member')
-                                                                        <span class="badge bg-danger">Member</span>
-                                                                        @endif
-                                                                    </td>
+                                                                    <td>{{ $category->id }}</td>
+                                                                    <td>{{ $category->name }}</td>
+                                                                    <td>{{ $category->deleted_at->format('d-m-Y') }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>

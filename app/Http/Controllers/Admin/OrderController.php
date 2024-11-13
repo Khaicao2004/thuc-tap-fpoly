@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -75,5 +76,27 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function getRestore()
+    {
+        $data = Order::onlyTrashed()->get();
+        return view('admin.Orders.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    { 
+        // dd($request->all());
+        try {
+            $OrderIds = $request->input('ids');
+            if ($OrderIds) {
+                Order::onlyTrashed()->whereIn('id', $OrderIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
     }
 }

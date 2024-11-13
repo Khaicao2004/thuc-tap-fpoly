@@ -32,7 +32,7 @@
                                             @endif
 
                                             <thead class="table-light">
-                                                <form action="{{ route('admin.restore.users') }}" method="POST">
+                                                <form action="{{ route('admin.restore.productColors') }}" method="POST">
                                                     @csrf
                                                     <table id="example"
                                                         class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -41,34 +41,25 @@
                                                             <tr>
                                                                 <th><input type="checkbox" id="select-all"></th>
                                                                 <th>ID</th>
-                                                                <th>NAME</th>
-                                                                <th>EMAIL</th>
-                                                                <th>TYPE</th>
+                                                                <th>Color</th>
+                                                                <th>Name</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($data as $user)
+                                                            @foreach ($data as $productcolors)
                                                                 <tr>
                                                                     <td>
                                                                         <input type="checkbox" name="ids[]"
-                                                                            value="{{ $user->id }}">
+                                                                            value="{{ $productcolors->id }}">
                                                                     </td>
+                                                                    <td>{{$productcolors->id}}</td>
                                                                     <td>
-                                                                        {{ $user->id }}
+                                                                        <div style="width: 50px; height: 50px; background: {{ $productcolors->name }} ">
+                                                                        </div>
                                                                     </td>
-                                                                    <td>
-                                                                        {{ $user->name }}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{ $user->email }}
-                                                                    </td>
-                                                                    <td>
-                                                                        @if($user->type == 'admin')
-                                                                        <span class="badge bg-primary">Admin</span>
-                                                                        @elseif($user->type == 'member')
-                                                                        <span class="badge bg-danger">Member</span>
-                                                                        @endif
-                                                                    </td>
+                                                                    <td>{{$productcolors->name}}</td>
+
+                                                                   
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
