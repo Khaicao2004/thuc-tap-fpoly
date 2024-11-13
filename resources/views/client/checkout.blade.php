@@ -14,41 +14,34 @@
             <div class="checkout__form">
                 <div class="row">
                     <div class="col-lg-8 col-md-6 mb-3">
-                        <form action="{{ url('/vnpay_payment') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="total" value="{{ $totalAmount }}">
-                            <button type="submit" name="redirect" class="btn-warning">Thanh toán online</button>
-                        </form>
-                        <form action="{{ route('order.save') }}" method="POST">
+                        <form action="{{ route('order.save') }}" method="POST" id="paymentForm">
                             @csrf
                             <h6 class="checkout__title">Chi tiết thanh toán</h6>
+                        
+                            <!-- Thông tin người dùng -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="checkout__input">
                                         <p>Họ và tên<span>*</span></p>
-                                        <input type="text" name="user_name" id="user_name" class="form-control"
-                                            value="{{ auth()->user()?->name }}">
+                                        <input type="text" name="user_name" id="user_name" class="form-control" value="{{ auth()->user()?->name }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
-                                <p>Address<span>*</span></p>
-                                <input type="text" name="user_address" id="user_address" class="form-control"
-                                    value="{{ auth()->user()?->address }}">
+                                <p>Địa chỉ<span>*</span></p>
+                                <input type="text" name="user_address" id="user_address" class="form-control" value="{{ auth()->user()?->address }}">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Phone<span>*</span></p>
-                                        <input type="text" name="user_phone" id="user_phone" class="form-control"
-                                            value="{{ auth()->user()?->phone }}">
+                                        <p>Số điện thoại<span>*</span></p>
+                                        <input type="text" name="user_phone" id="user_phone" class="form-control" value="{{ auth()->user()?->phone }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text" name="user_email" id="user_email" class="form-control"
-                                            value="{{ auth()->user()?->email }}">
+                                        <input type="text" name="user_email" id="user_email" class="form-control" value="{{ auth()->user()?->email }}">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +50,13 @@
                                 <input type="text" name="user_note" id="user_note" class="form-control">
                             </div>
                             <div class="row">
-                                <button type="submit" class="site-btn mr-3">Tiến hành thanh toán</button>
+                                <input type="hidden" name="total" value="{{ $totalAmount }}">
+                                
+                                <!-- Nút thanh toán thông thường -->
+                                <button type="button" class="site-btn mr-3" id="normalPaymentBtn">Tiến hành thanh toán</button>
+                        
+                                <!-- Nút thanh toán online -->
+                                <button type="button" class="btn btn-warning" id="onlinePaymentBtn">Thanh toán online</button>
                             </div>
                         </form>
                     </div>
@@ -225,4 +224,35 @@
             }
         }
     </style>
+@endsection
+
+@section('js')
+    <script>
+        // Khi người dùng chọn thanh toán thông thường
+        document.getElementById('normalPaymentBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Chuyển hành động của form đến route thanh toán thông thường
+            document.getElementById('paymentForm').action = "{{ route('order.save') }}";
+            
+            // Gửi form thanh toán thông thường
+            document.getElementById('paymentForm').submit();
+        });
+
+        // Khi người dùng chọn thanh toán online
+        document.getElementById('onlinePaymentBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Chuyển hành động của form đến route thanh toán online
+            document.getElementById('paymentForm').action = "{{ url('/vnpay_payment') }}";
+
+            // Thêm dữ liệu thanh toán online nếu cần (ví dụ: tổng tiền)
+            let form = document.getElementById('paymentForm');
+            let totalInput = document.querySelector('input[name="total"]');
+            form.appendChild(totalInput);
+
+            // Gửi form thanh toán online
+            form.submit();
+        });
+    </script>
 @endsection

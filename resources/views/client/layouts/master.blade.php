@@ -83,7 +83,7 @@
     <!-- Search End -->
 
     @include('client.layouts.partials.js')
-
+    @yield('js')
 </body>
 
 </html>

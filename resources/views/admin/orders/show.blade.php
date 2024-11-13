@@ -76,14 +76,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ number_format($item->product_price_sale) }} VNĐ</td>
+                                        <td>{{ number_format($item->variant_price) }} VNĐ</td>
                                         <td>{{ number_format($item->product_price_regular) }} VNĐ</td>
                                         <td>{{ $item->quantity }}</td>
                                         <td class="fw-medium text-end">
                                             @php
                                                 $totalAmount =
                                                     $item->quantity *
-                                                    ($item->product_price_sale ?: $item->product_price_regular);
+                                                    ($item->variant_price ?: $item->product_price_regular);
                                                 echo number_format($totalAmount) . 'VNĐ';
                                                 $total += $totalAmount;
                                             @endphp
