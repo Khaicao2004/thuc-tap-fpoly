@@ -30,7 +30,8 @@
                     <div class="d-flex align-items-center">
                         <h5 class="card-title flex-grow-1 mb-0">Order #{{ $data->id }}</h5>
                         <div class="flex-shrink-0">
-                            <a href="apps-invoices-details.html" class="btn btn-success btn-sm"><i class="ri-download-2-fill align-middle me-1"></i> Invoice</a>
+                            <a href="apps-invoices-details.html" class="btn btn-success btn-sm"><i
+                                    class="ri-download-2-fill align-middle me-1"></i> Invoice</a>
                         </div>
                     </div>
                 </div>
@@ -52,7 +53,7 @@
                                 @endphp
                                 {{-- @dd($data->orderItems->toArray()) --}}
                                 @foreach ($data->orderItems as $key => $item)
-                                {{-- @dd($item) --}}
+                                    {{-- @dd($item) --}}
                                     <tr>
                                         <td>
                                             <div class="d-flex">
@@ -66,9 +67,12 @@
                                                     <img src="{{ $url }}" alt="" class="img-fluid d-block">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h5 class="fs-15"><a href="apps-ecommerce-product-details.html" class="link-primary">{{ $item->product_name }}</a></h5>
-                                                    <p class="text-muted mb-0">Color: <span class="fw-medium">{{ $item->variant_color_name }}</span></p>
-                                                    <p class="text-muted mb-0">Size: <span class="fw-medium">{{ $item->variant_size_name }}</span></p>
+                                                    <h5 class="fs-15"><a href="apps-ecommerce-product-details.html"
+                                                            class="link-primary">{{ $item->product_name }}</a></h5>
+                                                    <p class="text-muted mb-0">Color: <span
+                                                            class="fw-medium">{{ $item->variant_color_name }}</span></p>
+                                                    <p class="text-muted mb-0">Size: <span
+                                                            class="fw-medium">{{ $item->variant_size_name }}</span></p>
                                                 </div>
                                             </div>
                                         </td>
@@ -77,7 +81,9 @@
                                         <td>{{ $item->quantity }}</td>
                                         <td class="fw-medium text-end">
                                             @php
-                                                $totalAmount = $item->quantity * ($item->product_price_sale ?: $item->product_price_regular);
+                                                $totalAmount =
+                                                    $item->quantity *
+                                                    ($item->product_price_sale ?: $item->product_price_regular);
                                                 echo number_format($totalAmount) . 'VNĐ';
                                                 $total += $totalAmount;
                                             @endphp
@@ -93,18 +99,22 @@
                                                     <th scope="row">Tổng đơn hàng (VNĐ) :</th>
                                                     <th class="text-end">{{ number_format($total) }} VNĐ</th>
                                                 </tr>
-                                                <tr class="border-top border-top-dashed">
-                                                    <th scope="row">Giá trị mã:</th>
-                                                    <th class="text-end">{{ number_format($data->coupon->discount_value) }} VNĐ</th>
-                                                </tr>
-                                                <tr class="border-top border-top-dashed">
-                                                    <th scope="row">Số tiền được giảm (VNĐ) :</th>
-                                                    <th class="text-end">{{ number_format($data->coupon->discount_value) }} VNĐ</th>
-                                                </tr>
-                                                <tr class="border-top border-top-dashed">
-                                                    <th scope="row">Tổng đơn hàng sau khi được giảm (VNĐ) :</th>
-                                                    <th class="text-end">{{ number_format($data->total_price) }} VNĐ</th>
-                                                </tr>
+                                                @if ($data->coupon && $data->coupon->discount_value != null)
+                                                    <tr class="border-top border-top-dashed">
+                                                        <th scope="row">Giá trị mã:</th>
+                                                        <th class="text-end">
+                                                            {{ number_format($data->coupon->discount_value) }} VNĐ</th>
+                                                    </tr>
+                                                    <tr class="border-top border-top-dashed">
+                                                        <th scope="row">Số tiền được giảm (VNĐ) :</th>
+                                                        <th class="text-end">
+                                                            {{ number_format($data->coupon->discount_value) }} VNĐ</th>
+                                                    </tr>
+                                                    <tr class="border-top border-top-dashed">
+                                                        <th scope="row">Tổng đơn hàng sau khi được giảm (VNĐ) :</th>
+                                                        <th class="text-end">{{ number_format($data->total_price) }} VNĐ</th>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </td>
@@ -134,22 +144,21 @@
                                         'delivered',
                                         'canceled',
                                     ];
-                                    $status_payment = [
-                                        'unpaid',
-                                        'paid',
-                                    ];
+                                    $status_payment = ['unpaid', 'paid'];
                                 @endphp
                                 <div class="mb-3 col-md-6 col-12">
                                     <select name="status_order" id="" disabled="disabled" class="form-control">
                                         @foreach ($status_order as $item)
-                                            <option value="" @if ($data->status_order == $item) selected @endif>{{ $item }}</option>
+                                            <option value="" @if ($data->status_order == $item) selected @endif>
+                                                {{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
                                     <select name="status_payment" id="" disabled="disabled" class="form-control">
                                         @foreach ($status_payment as $item)
-                                            <option value="" @if ($data->status_payment == $item) selected @endif>{{ $item }}</option>
+                                            <option value="" @if ($data->status_payment == $item) selected @endif>
+                                                {{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -177,7 +186,8 @@
                         <li>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <img src="theme/assets/images/users/avatar-3.jpg" alt="" class="avatar-sm rounded">
+                                    <img src="theme/assets/images/users/avatar-3.jpg" alt=""
+                                        class="avatar-sm rounded">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <h6 class="fs-14 mb-1">{{ $data->user_name }}</h6>
@@ -193,11 +203,13 @@
             <!--end card-->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Billing Address</h5>
+                    <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Billing
+                        Address</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
-                        <li class="fw-medium fs-14"><span class="fs-6">Tên người mua:</span> {{ $data->user_name }}</li>
+                        <li class="fw-medium fs-14"><span class="fs-6">Tên người mua:</span> {{ $data->user_name }}
+                        </li>
                         <li><span class="fs-6">Email:</span> {{ $data->user_email }}</li>
                         <li><span class="fs-6">Phone:</span> {{ $data->user_phone }}</li>
                         <li><span class="fs-6">Địa chỉ:</span> {{ $data->user_address }}</li>
@@ -209,15 +221,18 @@
             <!--end card-->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Shipping Address</h5>
+                    <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Shipping
+                        Address</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
-                        <li class="fw-medium fs-14"><span class="fs-6">Tên người nhận:</span> {{ $data->ship_user_name ?: $data->user_name}}</li>
-                        <li><span class="fs-6">Email:</span> {{ $data->ship_user_email ?: $data->user_email}}</li>
-                        <li><span class="fs-6">Phone:</span> {{ $data->ship_user_phone ?: $data->user_phone}}</li>
-                        <li><span class="fs-6">Địa chỉ:</span> {{ $data->ship_user_address ?: $data->user_address}}</li>
-                        <li><span class="fs-6">Note:</span> {{ $data->ship_user_note ?: $data->user_note}}</li>
+                        <li class="fw-medium fs-14"><span class="fs-6">Tên người nhận:</span>
+                            {{ $data->ship_user_name ?: $data->user_name }}</li>
+                        <li><span class="fs-6">Email:</span> {{ $data->ship_user_email ?: $data->user_email }}</li>
+                        <li><span class="fs-6">Phone:</span> {{ $data->ship_user_phone ?: $data->user_phone }}</li>
+                        <li><span class="fs-6">Địa chỉ:</span> {{ $data->ship_user_address ?: $data->user_address }}
+                        </li>
+                        <li><span class="fs-6">Note:</span> {{ $data->ship_user_note ?: $data->user_note }}</li>
                     </ul>
                 </div>
             </div>

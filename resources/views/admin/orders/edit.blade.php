@@ -95,18 +95,22 @@
                                                     <th scope="row">Tổng đơn hàng (VNĐ) :</th>
                                                     <th class="text-end">{{ number_format($total) }} VNĐ</th>
                                                 </tr>
-                                                <tr class="border-top border-top-dashed">
-                                                    <th scope="row">Giá trị mã:</th>
-                                                    <th class="text-end">{{ number_format($data->coupon->discount_value) }} VNĐ</th>
-                                                </tr>
-                                                <tr class="border-top border-top-dashed">
-                                                    <th scope="row">Số tiền được giảm (VNĐ) :</th>
-                                                    <th class="text-end">{{ number_format($data->coupon->discount_value) }} VNĐ</th>
-                                                </tr>
-                                                <tr class="border-top border-top-dashed">
-                                                    <th scope="row">Tổng đơn hàng sau khi được giảm (VNĐ) :</th>
-                                                    <th class="text-end">{{ number_format($data->total_price) }} VNĐ</th>
-                                                </tr>
+                                                @if ($data->coupon && $data->coupon->discount_value != null)
+                                                    <tr class="border-top border-top-dashed">
+                                                        <th scope="row">Giá trị mã:</th>
+                                                        <th class="text-end">
+                                                            {{ number_format($data->coupon->discount_value) }} VNĐ</th>
+                                                    </tr>
+                                                    <tr class="border-top border-top-dashed">
+                                                        <th scope="row">Số tiền được giảm (VNĐ) :</th>
+                                                        <th class="text-end">
+                                                            {{ number_format($data->coupon->discount_value) }} VNĐ</th>
+                                                    </tr>
+                                                    <tr class="border-top border-top-dashed">
+                                                        <th scope="row">Tổng đơn hàng sau khi được giảm (VNĐ) :</th>
+                                                        <th class="text-end">{{ number_format($data->total_price) }} VNĐ</th>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </td>
