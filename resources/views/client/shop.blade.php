@@ -107,6 +107,7 @@
                 <div class="col-lg-9">
                     <div class="row">
                         @foreach ($products as $item)
+                        {{-- @dd($products) --}}
                         @php
                             $url = $item->img_thumbnail;
                             if (!Str::contains($url, 'http')) {

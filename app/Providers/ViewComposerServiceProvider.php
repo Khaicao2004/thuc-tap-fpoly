@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Catalogue;
+use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerServiceProvider extends ServiceProvider
@@ -21,6 +23,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         view()->composer('client.*', function ($view) {
             // totalAmout
+            $slug = request()->route('slug');
             $totalAmount = 0;
             if (session()->has('cart')) {
                 foreach (session('cart') as $item) {
@@ -28,11 +31,30 @@ class ViewComposerServiceProvider extends ServiceProvider
                 }
             }
             // catalogue 
-            // $catalogues = Catalogue::query()->where('is_active', true)->get();
-            // dd($catalogues->toArray());
+            $catalogue = Catalogue::whereNull('parent_id')
+            ->orderBy('id', 'asc')
+            ->take(8) 
+            ->limit(5) 
+            ->with('children.children') 
+            ->get();
+        // dd( $catalogue);
+        $cataloguePro = [];
+
+        foreach ($catalogue as $cat) {
+            $cataloguePro[$cat->id] = $cat->products()->where('is_active', true)->get();
+        }
+
+        $currentCatalogue = $slug ? Catalogue::where('slug', $slug)->first() : null;
+
+        $products = $currentCatalogue ? Product::where('catalogue_id', $currentCatalogue->id)
+            ->orWhereIn('catalogue_id', $currentCatalogue->children()->pluck('id'))
+            ->get() : collect(); 
             $view->with([
                 'totalAmount' => $totalAmount,
-                // 'catalogues' => $catalogues
+                'catalogue' => $catalogue,
+                'cataloguePro'=>$cataloguePro,
+                'currentCatalogue'=>$currentCatalogue,
+                'products'=>$products
             ]);
         });
     }

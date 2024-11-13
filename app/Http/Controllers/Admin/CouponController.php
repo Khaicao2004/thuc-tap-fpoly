@@ -101,4 +101,27 @@ class CouponController extends Controller
         $coupon->delete();
         return back()->with('success', 'Xóa thành công');
     }
+
+
+    public function getRestore()
+    {
+        $data = Coupon::onlyTrashed()->get();
+        return view('admin.coupons.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    { 
+        // dd($request->all());
+        try {
+            $couponIds = $request->input('ids');
+            if ($couponIds) {
+                Coupon::onlyTrashed()->whereIn('id', $couponIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
+    }
 }

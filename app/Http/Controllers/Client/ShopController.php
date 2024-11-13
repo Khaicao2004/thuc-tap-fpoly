@@ -30,6 +30,7 @@ class ShopController extends Controller
         }
         // Lấy danh sách sản phẩm và phân trang
         $products = $productsQuery->latest('id')->paginate(9);
+        // dd($products);
         $catalogues = Catalogue::query()->withCount('products')->get();
         $colors = ProductColor::query()->withCount('variants')->get();
         $sizes = ProductSize::query()->withCount('variants')->get();
