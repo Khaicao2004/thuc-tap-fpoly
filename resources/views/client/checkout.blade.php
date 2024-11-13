@@ -55,8 +55,10 @@
                                 <!-- Nút thanh toán thông thường -->
                                 <button type="button" class="site-btn mr-3" id="normalPaymentBtn">Tiến hành thanh toán</button>
                         
-                                <!-- Nút thanh toán online -->
-                                <button type="button" class="btn btn-warning" id="onlinePaymentBtn">Thanh toán online</button>
+                                @if (Auth::check())
+                                    <!-- Nút thanh toán online -->
+                                    <button type="button" class="btn btn-warning" id="onlinePaymentBtn">Thanh toán online</button>
+                                @endif
                             </div>
                         </form>
                     </div>
