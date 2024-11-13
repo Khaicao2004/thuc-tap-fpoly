@@ -91,18 +91,22 @@ class UserController extends Controller
     }
 
 
+
     public function getRestore()
     {
         $data = User::onlyTrashed()->get();
         return view('admin.users.restore', compact('data'));
+
     }
     public function restore(Request $request)
     {
         // dd($request->all());
         try {
+
             $userIds = $request->input('ids');
             if ($userIds) {
                 User::onlyTrashed()->whereIn('id', $userIds)->restore();
+
                 return back()->with('success', 'Khôi phục bản ghi thành công.');
             } else {
                 return back()->with('error', 'Không bản ghi nào cần khôi phục.');
@@ -112,4 +116,5 @@ class UserController extends Controller
             return back()->with('error', 'Khôi phục bản ghi thất bại.');
         }
     }
+    
 }

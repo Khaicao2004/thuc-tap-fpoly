@@ -32,7 +32,7 @@
                                             @endif
 
                                             <thead class="table-light">
-                                                <form action="{{ route('admin.restore.users') }}" method="POST">
+                                                <form action="{{ route('admin.restore.orders') }}" method="POST">
                                                     @csrf
                                                     <table id="example"
                                                         class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -41,34 +41,66 @@
                                                             <tr>
                                                                 <th><input type="checkbox" id="select-all"></th>
                                                                 <th>ID</th>
-                                                                <th>NAME</th>
-                                                                <th>EMAIL</th>
-                                                                <th>TYPE</th>
+                                                                <th>User name</th>
+                                                                <th>User email</th>
+                                                                <th>User phone</th>
+                                                                <th>User address</th>
+                                                                <th>Status order</th>
+                                                                <th>Status payment</th>
+                                                                <th>User note</th>
+                                                                <th>Total price</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($data as $user)
+                                                            @foreach ($data as $suppliers)
                                                                 <tr>
                                                                     <td>
                                                                         <input type="checkbox" name="ids[]"
-                                                                            value="{{ $user->id }}">
+                                                                            value="{{ $suppliers->id }}">
+                                                                    </td>
+                                                                    <td>{{ $item->id }}</td>
+                                                                    <td>{{ $item->user_name }}</td>
+                                                                    <td>{{ $item->user_email }}</td>
+                                                                    <td>{{ $item->user_phone }}</td>
+                                                                    <td>{{ $item->user_address }}</td>
+                                                                    <td>
+                                                                        @php
+                                                                            if ($item->status_order == 'pending') {
+                                                                                echo '<span class="badge bg-warning">Chờ xác nhận</span>';
+                                                                            } elseif (
+                                                                                $item->status_order == 'confirmed'
+                                                                            ) {
+                                                                                echo '<span class="badge bg-primary">Đã xác nhận</span>';
+                                                                            } elseif (
+                                                                                $item->status_order == 'preparing_goods'
+                                                                            ) {
+                                                                                echo '<span class="badge bg-dark">Đang chuẩn bị hàng</span>';
+                                                                            } elseif (
+                                                                                $item->status_order == 'shipping'
+                                                                            ) {
+                                                                                echo '<span class="badge bg-secondary">Đã vận chuyển</span>';
+                                                                            } elseif (
+                                                                                $item->status_order == 'delivered'
+                                                                            ) {
+                                                                                echo '<span class="badge bg-success">Đã giao hàng</span>';
+                                                                            } elseif (
+                                                                                $item->status_order == 'canceled'
+                                                                            ) {
+                                                                                echo '<span class="badge bg-danger">Đơn hàng bị hủy</span>';
+                                                                            }
+                                                                        @endphp
                                                                     </td>
                                                                     <td>
-                                                                        {{ $user->id }}
+                                                                        @php
+                                                                            if ($item->status_payment == 'unpaid') {
+                                                                                echo '<span class="badge bg-danger">Chưa thanh toán</span>';
+                                                                            } elseif ($item->status_payment == 'paid') {
+                                                                                echo '<span class="badge bg-success">Đã thanh toán</span>';
+                                                                            }
+                                                                        @endphp
                                                                     </td>
-                                                                    <td>
-                                                                        {{ $user->name }}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{ $user->email }}
-                                                                    </td>
-                                                                    <td>
-                                                                        @if($user->type == 'admin')
-                                                                        <span class="badge bg-primary">Admin</span>
-                                                                        @elseif($user->type == 'member')
-                                                                        <span class="badge bg-danger">Member</span>
-                                                                        @endif
-                                                                    </td>
+                                                                    <td>{{ $item->user_note }}</td>
+                                                                    <td>{{ $item->total_price }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>

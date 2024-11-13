@@ -168,4 +168,26 @@ class CatalogueController extends Controller
 
         return back();
     }
+
+    public function getRestore()
+    {
+        $data = Catalogue::onlyTrashed()->get();
+        return view('admin.catalogues.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $categoryIds = $request->input('ids');
+            if ($categoryIds) {
+                Catalogue::onlyTrashed()->whereIn('id', $categoryIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
+    }
 }

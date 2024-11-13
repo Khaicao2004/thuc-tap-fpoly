@@ -41,4 +41,39 @@ Route::prefix('admin')
             return view('admin.layouts.trash');
         })->name('trash');
     });
+
+    Route::prefix('restore')->group(function () {
+        // restore categories
+        Route::get('/categories', [CatalogueController::class, 'getRestore'])->name('restore.categories');
+        Route::post('/categories', [CatalogueController::class, 'restore']);
+        
+        Route::get('/products', [ProductController::class, 'getRestore'])->name('restore.products');
+        Route::post('/products', [ProductController::class, 'restore']);
+
+        Route::get('/productColors', [ProductColorController::class, 'getRestore'])->name('restore.productColors');
+        Route::post('/productColors', [ProductColorController::class, 'restore']);
+
+        Route::get('/productsizes', [ProductSizeController::class, 'getRestore'])->name('restore.productsizes');
+        Route::post('/productsizes', [ProductSizeController::class, 'restore']);
+
+        Route::get('/users', [UserController::class, 'getRestore'])->name('restore.users');
+        Route::post('/users', [UserController::class, 'restore']);
+
+        Route::get('/Suppliers', [SupplierController::class, 'getRestore'])->name('restore.Suppliers');
+        Route::post('/Suppliers', [SupplierController::class, 'restore']);
+
+        Route::get('/Comments', [CommentController::class, 'getRestore'])->name('restore.Comments');
+        Route::post('/Comments', [CommentController::class, 'restore']);
+
+
+        Route::get('/coupons', [CouponController::class, 'getRestore'])->name('restore.coupons');
+        Route::post('/coupons', [CouponController::class, 'restore']);
+
+        Route::get('/orders', [OrderController::class, 'getRestore'])->name('restore.orders');
+        Route::post('/orders', [OrderController::class, 'restore']);
+
+        Route::get('/warehouses', [WareHouseController::class, 'getRestore'])->name('restore.warehouses');
+        Route::post('/warehouses', [WareHouseController::class, 'restore']);
+        
+    });
 });

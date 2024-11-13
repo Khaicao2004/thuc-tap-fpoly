@@ -87,4 +87,26 @@ class ProductSizeController extends Controller
             return back()->with('error', 'Lỗi xóa size');
         }
     }
+
+    public function getRestore()
+    {
+        $data = ProductSize::onlyTrashed()->get();
+        return view('admin.productsizes.restore', compact('data'));
+    }
+    public function restore(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $productsizeIds = $request->input('ids');
+            if ($productsizeIds) {
+                ProductSize::onlyTrashed()->whereIn('id', $productsizeIds)->restore();
+                return back()->with('success', 'Khôi phục bản ghi thành công.');
+            } else {
+                return back()->with('error', 'Không bản ghi nào cần khôi phục.');
+            }
+        } catch (\Exception $exception) {
+            Log::error('Lỗi xảy ra: ' . $exception->getMessage());
+            return back()->with('error', 'Khôi phục bản ghi thất bại.');
+        }
+    }
 }
