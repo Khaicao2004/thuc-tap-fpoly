@@ -22,3 +22,4 @@ Route::get('statistics', [DashboardController::class, 'getStatistics']);
 Route::get('best-salling-product', [DashboardController::class, 'bestSellingProduct']);
 Route::get('recent-orders', [DashboardController::class, 'recentOrders']);
 Route::get('/dashboard-categories', [DashboardController::class, 'getTotalCategory'])->name('dashboard-categories');
+Route::get('dashboard/suppliers', [DashboardController::class, 'getSupplier'])->name('dashboard.suppliers');
