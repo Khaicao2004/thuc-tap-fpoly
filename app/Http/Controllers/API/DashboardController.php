@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Catalogue;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -153,5 +155,23 @@ class DashboardController extends Controller
 
         // Trả về phản hồi JSON với dữ liệu
         return response()->json($data);
+    }
+    
+    public function getSupplier()
+    { {
+            // Lấy tổng số loại thuốc
+            $totalProducts = Product::count();
+            // Lấy danh sách nhà cung cấp và số lượng loại thuốc họ cung cấp
+            $suppliers = Supplier::withCount('products')->get();
+            // Tính toán tỷ lệ phần trăm cho từng nhà cung cấp
+            $supplierPercentages = $suppliers->map(function ($supplier) use ($totalProducts) {
+                return [
+                    'supplier_name' => $supplier->name,
+                    'percentage' => $totalProducts > 0 ? ($supplier->products_count / $totalProducts) * 100 : 0,
+                ];
+            });
+
+            return response()->json($supplierPercentages);
+        }
     }
 }
