@@ -19,7 +19,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card" id="categoryList">
@@ -35,7 +34,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="mb-4 me-3">
@@ -46,8 +44,7 @@
                                 <label for="maxDate">Ngày tạo đến:</label>
                                 <input type="date" id="maxDate" class="form-control">
                             </div>
-                        </div>
-                        
+                        </div>    
                         <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                             <thead>
                                 <tr>
